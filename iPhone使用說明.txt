@@ -1,0 +1,21 @@
+政府採購題庫練習系統－iPhone版
+
+【題庫內容】
+共 14 個主題、3,599 題，包含「政府採購法之罰則及附則」276題。
+
+【最簡單的使用方式】
+1. 將「政府採購題庫_iPhone離線版.html」傳到 iPhone。
+2. 在 iPhone「檔案」App 點選該檔案。
+3. 使用分享功能，選擇以 Safari 開啟。
+4. 題庫可直接操作；作答紀錄會保存在該瀏覽器。
+
+【建議方式：當成主畫面App使用】
+將本資料夾上傳至 GitHub Pages、Cloudflare Pages、Netlify 或其他靜態網站空間後：
+1. 使用 iPhone Safari 開啟網址。
+2. 點 Safari 下方「分享」。
+3. 選擇「加入主畫面」。
+4. 之後可像一般 App 一樣開啟，第一次載入完成後可離線使用。
+
+【注意】
+iPhone 無法直接執行原本的 Python／Streamlit 程式，因此本版本已改成純 HTML、CSS 與 JavaScript。
+學習紀錄儲存在 iPhone 的 Safari；清除網站資料會刪除紀錄，建議定期使用「匯出學習紀錄」備份。
