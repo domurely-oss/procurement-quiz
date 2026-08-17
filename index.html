@@ -6,207 +6,1503 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="採購題庫">
-  <meta name="theme-color" content="#345c8a">
+  <meta name="theme-color" content="#744321">
   <title>政府採購題庫練習系統</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon-192.png">
   <style>
+
     :root{
-      --bg:#f3f6f9;--surface:#fff;--surface2:#f8fafc;--ink:#263548;
-      --muted:#6d7b8d;--line:#dfe6ed;--primary:#345c8a;--primary2:#2f7e78;
-      --ok:#23705e;--bad:#ad4255;--warn:#a16b20;
-      --shadow:0 12px 32px rgba(38,55,76,.08);
+      --bg:#fbf7f0;
+      --surface:#fffdf9;
+      --surface2:#fffaf2;
+      --ink:#211814;
+      --muted:#776b64;
+      --line:#eadfd2;
+      --brown:#744321;
+      --brown2:#9a6038;
+      --orange:#d58b45;
+      --teal:#17878c;
+      --mint:#e7f7f5;
+      --mint2:#dff2f1;
+      --ok:#2f9d68;
+      --bad:#ee6f72;
+      --warn:#c88b2c;
+      --gold:#f7e4a8;
+      --shadow:0 16px 38px rgba(92,55,30,.10);
     }
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html{scroll-behavior:smooth}
     body{
-      margin:0;color:var(--ink);background:
-      radial-gradient(circle at 5% 0%,rgba(52,92,138,.09),transparent 25rem),
-      radial-gradient(circle at 100% 7%,rgba(47,126,120,.07),transparent 23rem),
-      var(--bg);
+      margin:0;
+      color:var(--ink);
+      background-color:var(--bg);
+      background-image:
+        radial-gradient(circle,rgba(213,139,69,.18) 1.2px,transparent 1.25px),
+        linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.22));
+      background-size:22px 22px,auto;
       font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",
       "Microsoft JhengHei",sans-serif;
-      padding-bottom:calc(84px + env(safe-area-inset-bottom));
+      padding-bottom:calc(88px + env(safe-area-inset-bottom));
     }
     button,select,input{font:inherit}
     button{cursor:pointer}
-    .app{max-width:760px;margin:0 auto;padding:0 14px}
+    .app{max-width:760px;margin:0 auto;padding:0 15px}
+
     .topbar{
-      position:sticky;top:0;z-index:20;margin:0 -14px;
-      padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
-      background:rgba(243,246,249,.9);backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(213,223,232,.8)
+      position:sticky;
+      top:0;
+      z-index:30;
+      margin:0 -15px;
+      padding:calc(12px + env(safe-area-inset-top)) 16px 12px;
+      background:linear-gradient(180deg,#75421f,#63371d);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 8px 24px rgba(79,43,22,.14);
     }
     .topbar-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .brand{display:flex;align-items:center;gap:10px}
+    .brand{display:flex;align-items:center;gap:11px;color:#fff}
     .brand-mark{
-      width:38px;height:38px;display:grid;place-items:center;border-radius:13px;
-      color:#fff;background:linear-gradient(145deg,var(--primary),var(--primary2));
-      box-shadow:0 7px 16px rgba(52,92,138,.2);font-size:20px
+      width:43px;height:43px;display:grid;place-items:center;border-radius:15px;
+      color:#5f351e;background:#fff8ed;border:2px solid rgba(255,255,255,.72);
+      box-shadow:0 7px 18px rgba(46,23,10,.18);font-size:24px
     }
-    .brand-title{font-weight:850;font-size:15px;line-height:1.25}
-    .brand-sub{font-size:11px;color:var(--muted);margin-top:2px}
+    .brand-title{font-weight:900;font-size:17px;line-height:1.25;letter-spacing:.02em}
+    .brand-sub{font-size:11px;color:rgba(255,255,255,.72);margin-top:2px}
     .icon-btn{
-      width:40px;height:40px;border-radius:12px;border:1px solid var(--line);
-      background:rgba(255,255,255,.9);color:var(--ink);font-size:18px
+      width:42px;height:42px;border-radius:14px;border:1px solid rgba(255,255,255,.24);
+      background:rgba(255,255,255,.12);color:#fff;font-size:19px
     }
-    .view{display:none;padding:16px 0 10px}
+
+    .view{display:none;padding:18px 0 12px}
     .view.active{display:block}
+
     .hero{
-      position:relative;overflow:hidden;padding:22px 20px;margin-bottom:14px;
-      color:#fff;border-radius:24px;background:linear-gradient(128deg,#345c8a,#376f84 56%,#2f7e78);
-      box-shadow:0 18px 42px rgba(37,70,94,.16)
+      position:relative;
+      overflow:hidden;
+      padding:24px 21px;
+      margin-bottom:15px;
+      color:#fff;
+      border-radius:24px;
+      background:linear-gradient(138deg,#8b512c 0%,#75421f 62%,#63371d 100%);
+      box-shadow:0 18px 42px rgba(93,54,29,.17);
+    }
+    .hero:before{
+      content:"";
+      position:absolute;
+      width:180px;height:180px;right:-70px;top:-88px;
+      border:30px solid rgba(255,255,255,.055);border-radius:50%
     }
     .hero:after{
-      content:"";position:absolute;width:260px;height:260px;right:-130px;top:-165px;
-      border:45px solid rgba(255,255,255,.06);border-radius:50%
+      content:"";
+      position:absolute;left:22px;bottom:18px;width:44px;height:7px;
+      border-radius:999px;background:var(--orange);opacity:.95
     }
-    .hero small{position:relative;z-index:1;opacity:.72;font-weight:800;letter-spacing:.12em}
-    .hero h1{position:relative;z-index:1;margin:6px 0 8px;font-size:26px;line-height:1.3}
-    .hero p{position:relative;z-index:1;margin:0;opacity:.86;line-height:1.7;font-size:14px}
-    .chips{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+    .hero small,.hero h1,.hero p,.chips{position:relative;z-index:1}
+    .hero small{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      color:rgba(255,255,255,.8);
+      font-weight:800;
+      letter-spacing:.1em;
+      font-size:11px
+    }
+    .hero h1{margin:10px 0 8px;font-size:29px;line-height:1.3;font-weight:950}
+    .hero p{margin:0 0 12px;color:rgba(255,255,255,.82);line-height:1.75;font-size:14px}
+    .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
     .chip{
-      padding:5px 9px;border:1px solid rgba(255,255,255,.2);border-radius:999px;
-      background:rgba(255,255,255,.1);font-size:12px;font-weight:700
+      padding:6px 10px;border:1px solid rgba(255,255,255,.2);border-radius:999px;
+      background:rgba(255,255,255,.1);font-size:12px;font-weight:750
     }
+
+    .practice-title{
+      margin:2px 2px 12px;
+      font-size:31px;
+      line-height:1.22;
+      font-weight:950;
+      color:#201512;
+      letter-spacing:-.035em
+    }
+    .practice-title span{
+      position:relative;
+      display:inline-block;
+      z-index:1
+    }
+    .practice-title span:after{
+      content:"";
+      position:absolute;
+      left:44%;right:-2px;bottom:1px;height:11px;
+      background:#f2d4ad;
+      z-index:-1;
+      border-radius:2px
+    }
+
     .card{
-      background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:18px;
-      box-shadow:0 8px 24px rgba(42,58,77,.05);padding:16px;margin-bottom:12px
+      background:rgba(255,253,249,.97);
+      border:1px solid var(--line);
+      border-radius:21px;
+      box-shadow:0 10px 28px rgba(92,55,30,.07);
+      padding:17px;
+      margin-bottom:13px
     }
     .section-title{
-      display:flex;align-items:center;gap:8px;margin:19px 2px 10px;font-weight:850;font-size:17px
+      display:flex;align-items:center;gap:9px;margin:20px 2px 11px;
+      font-weight:900;font-size:18px;color:#163c43
     }
     .section-title:before{
-      content:"";width:5px;height:19px;border-radius:99px;
-      background:linear-gradient(var(--primary),var(--primary2))
+      content:"";width:6px;height:22px;border-radius:99px;background:var(--teal)
     }
+
     .form-grid{display:grid;gap:11px}
-    label.field{display:grid;gap:6px;font-size:13px;font-weight:750;color:var(--muted)}
+    label.field{display:grid;gap:7px;font-size:13px;font-weight:800;color:#7d6a5c}
     select,input[type="search"]{
-      width:100%;min-height:48px;padding:0 13px;border:1px solid #d6e0e8;
-      border-radius:13px;background:#fff;color:var(--ink);outline:none
+      width:100%;min-height:50px;padding:0 14px;border:1px solid #dfd1c2;
+      border-radius:14px;background:#fff;color:var(--ink);outline:none
     }
-    select:focus,input:focus{border-color:#7e9ab4;box-shadow:0 0 0 3px rgba(52,92,138,.09)}
-    .segmented{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+    select:focus,input:focus{
+      border-color:#c58448;
+      box-shadow:0 0 0 3px rgba(213,139,69,.13)
+    }
+    .segmented{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
     .segmented.two{grid-template-columns:repeat(2,1fr)}
     .seg-btn{
-      min-height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;
-      color:var(--muted);font-weight:760;font-size:13px
+      min-height:45px;border:1px solid #e1d5c7;border-radius:13px;background:#fff;
+      color:#7b6e66;font-weight:800;font-size:13px
     }
-    .seg-btn.active{border-color:#7895ad;background:#edf4f8;color:var(--primary)}
-    .single-question-controls{
-      margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:15px;
-      background:rgba(248,250,252,.95)
+    .seg-btn.active{
+      border-color:#c98448;background:#fff1df;color:#75421f;
+      box-shadow:0 4px 12px rgba(164,95,45,.08)
+    }
+
+    .single-question-controls,.jump-row{
+      margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:16px;
+      background:rgba(255,250,242,.95)
     }
     .question-preview{
-      margin-top:9px;padding:10px 11px;border-radius:12px;background:#fff;
-      border:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.65
+      margin-top:9px;padding:11px 12px;border-radius:13px;background:#fff;
+      border:1px solid #eadfd2;color:#6f625b;font-size:12px;line-height:1.65
     }
-    .jump-row{
-      margin:10px 0;padding:10px 11px;border:1px solid var(--line);
-      border-radius:14px;background:rgba(255,255,255,.86)
-    }
+    .jump-row{margin:11px 0 13px}
     .jump-row .field{font-size:12px}
-    .jump-row select{min-height:44px}
+    .jump-row select{min-height:45px}
+
     .primary-btn,.secondary-btn,.danger-btn{
-      width:100%;min-height:50px;border-radius:14px;font-weight:800;border:1px solid transparent
+      width:100%;min-height:51px;border-radius:15px;font-weight:850;border:1px solid transparent
     }
-    .primary-btn{color:#fff;background:linear-gradient(135deg,var(--primary),#3d7487)}
-    .secondary-btn{color:var(--ink);background:#fff;border-color:var(--line)}
+    .primary-btn{
+      color:#fff;background:linear-gradient(135deg,#8c512d,#72401f);
+      box-shadow:0 9px 20px rgba(117,66,31,.18)
+    }
+    .secondary-btn{color:#4f4038;background:#fff;border-color:#e2d6c9}
     .skip-btn{
-      color:#81591b;background:#fff8e8;border:1px solid #e7cf98;
-      width:100%;min-height:48px;border-radius:14px;font-weight:800
+      color:#855c1f;background:#fff4d8;border:1px solid #ebcf90;
+      width:100%;min-height:49px;border-radius:15px;font-weight:850
     }
-    .skip-btn:active{background:#fff2d5}
-    .danger-btn{color:var(--bad);background:#fff1f4;border-color:#ecc5cf}
-    .category-list{display:grid;gap:10px}
+    .danger-btn{color:#b24e5a;background:#fff1f2;border-color:#efc8cd}
+
+    .category-list{display:grid;gap:11px}
     .category-row{
-      padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.95)
+      padding:15px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,249,.98);
+      box-shadow:0 7px 18px rgba(83,49,29,.045)
     }
     .category-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .category-name{font-weight:820;line-height:1.45}
-    .category-count{white-space:nowrap;color:var(--muted);font-size:12px}
-    .progress-track{height:7px;background:#e5ebf0;border-radius:99px;overflow:hidden;margin-top:10px}
-    .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));border-radius:99px}
-    .progress-meta{display:flex;justify-content:space-between;margin-top:7px;color:var(--muted);font-size:12px}
-    .quiz-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-    .quiz-meta{font-size:12px;color:var(--muted);line-height:1.5}
+    .category-name{font-weight:860;line-height:1.48;color:#2b211d}
+    .category-count{white-space:nowrap;color:#8a7b71;font-size:12px}
+    .progress-track{height:8px;background:#eee5da;border-radius:99px;overflow:hidden;margin-top:11px}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#d58b45,#17878c);border-radius:99px}
+    .progress-meta{display:flex;justify-content:space-between;margin-top:8px;color:#8a7b71;font-size:12px}
+
+    .quiz-head{
+      display:flex;align-items:center;justify-content:space-between;gap:8px;
+      margin-bottom:10px;padding:0 2px
+    }
+    .quiz-meta{font-size:12px;color:#7c6f67;line-height:1.55}
     .status{
-      display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800
+      display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;
+      font-size:11px;font-weight:850
     }
-    .status.none{color:#68768a;background:#f4f7fa;border:1px solid #d8e0e8}
-    .status.ok{color:var(--ok);background:#edf8f5;border:1px solid #bcded4}
-    .status.bad{color:var(--bad);background:#fff2f4;border:1px solid #eac8d0}
-    .status.skip{color:#8a611f;background:#fff8e8;border:1px solid #ead5a4}
+    .status.none{color:#75685f;background:#f5efe8;border:1px solid #e2d6ca}
+    .status.ok{color:#267c56;background:#eaf7f0;border:1px solid #b9dfca}
+    .status.bad{color:#b24d59;background:#fff0f2;border:1px solid #efc4cb}
+    .status.skip{color:#92631d;background:#fff5dc;border:1px solid #ead09a}
+
     .question-card{
-      padding:18px 16px;border:1px solid #dce4eb;border-left:5px solid var(--primary);
-      border-radius:19px;background:rgba(255,255,255,.98);box-shadow:var(--shadow)
+      padding:19px 17px 18px;
+      border:1px solid #e3d7ca;
+      border-radius:21px;
+      background:rgba(255,255,255,.99);
+      box-shadow:var(--shadow)
     }
-    .question-number{font-size:11px;color:#7b8797;font-weight:850;letter-spacing:.1em;margin-bottom:8px}
-    .question-text{font-size:18px;line-height:1.82;font-weight:730}
-    .options{display:grid;gap:9px;margin-top:14px}
+    .question-card:before{
+      content:"—  題目";
+      display:block;
+      color:#99725a;
+      font-size:12px;
+      font-weight:850;
+      margin-bottom:10px
+    }
+    .question-number{font-size:11px;color:#9c8e85;font-weight:850;letter-spacing:.1em;margin-bottom:8px}
+    .question-text{font-size:20px;line-height:1.78;font-weight:850;color:#241813}
+    .options{display:grid;gap:10px;margin-top:16px}
     .option-btn{
-      display:flex;align-items:flex-start;gap:10px;width:100%;padding:13px;border:1px solid #dde5ec;
-      border-radius:14px;background:#fff;text-align:left;color:var(--ink);line-height:1.65
+      display:flex;align-items:flex-start;gap:11px;width:100%;padding:14px;
+      border:1px solid #e7ddd3;border-radius:15px;background:#fff;text-align:left;
+      color:#2a211d;line-height:1.67;font-weight:680
     }
-    .option-btn.selected{border-color:#718fa8;background:#eef4f8;box-shadow:0 0 0 2px rgba(52,92,138,.06)}
-    .option-btn.correct{border-color:#9acdbf;background:#edf8f5;color:var(--ok)}
-    .option-btn.wrong{border-color:#e0aeb9;background:#fff1f4;color:var(--bad)}
+    .option-btn.selected{
+      border-color:#c98a51;background:#fff3e4;
+      box-shadow:0 0 0 2px rgba(213,139,69,.09)
+    }
+    .option-btn.correct{border-color:#91ccb0;background:#eef9f3;color:#236f4d}
+    .option-btn.wrong{border-color:#e7a8b0;background:#fff0f2;color:#ad4653}
     .option-key{
-      flex:0 0 28px;width:28px;height:28px;display:grid;place-items:center;border-radius:9px;
-      background:#eef2f6;font-size:12px;font-weight:850
+      flex:0 0 30px;width:30px;height:30px;display:grid;place-items:center;border-radius:10px;
+      background:#f5eee6;color:#75421f;font-size:12px;font-weight:900
     }
-    .answer-banner{padding:13px 14px;margin-top:12px;border-radius:14px;font-weight:780;line-height:1.65}
-    .answer-banner.ok{color:var(--ok);border:1px solid #b9ddd2;background:#edf8f5}
-    .answer-banner.bad{color:var(--bad);border:1px solid #ecc5cf;background:#fff1f4}
-    .explain{margin-top:12px;padding:15px;border:1px solid var(--line);border-radius:16px;background:#fff}
-    .explain h3{margin:0 0 8px;font-size:16px}
-    .explain p{margin:0;color:#435165;white-space:pre-wrap;line-height:1.82;font-size:14px}
-    details{margin-top:10px;border:1px solid var(--line);border-radius:13px;background:var(--surface2)}
-    summary{padding:12px 13px;font-weight:780;cursor:pointer}
-    .detail-body{padding:0 13px 13px;color:#46556a;line-height:1.75;font-size:13px}
-    .note{padding:11px 12px;margin-top:9px;border-radius:12px;font-size:13px;line-height:1.7}
-    .note.source{background:#f3f7fa;border:1px solid #dae4ec}
-    .note.memory{background:#eff8f5;border:1px solid #c8e3dc;color:#23695d}
-    .note.correct{background:#fff5f6;border:1px solid #ecd0d6;color:#8e3f50}
-    .quiz-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
-    .search-results{display:grid;gap:9px;margin-top:12px}
-    .search-item{padding:13px;border:1px solid var(--line);border-radius:14px;background:#fff}
-    .search-item-title{font-weight:800;line-height:1.55}
-    .search-item-meta{margin-top:5px;color:var(--muted);font-size:11px}
-    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:5px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.7)}
-    .tab-btn{min-height:42px;border:0;border-radius:10px;background:transparent;color:var(--muted);font-weight:780}
-    .tab-btn.active{background:#fff;color:var(--primary);box-shadow:0 4px 12px rgba(43,61,79,.08)}
-    .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:12px 0}
-    .metric{padding:13px;border:1px solid var(--line);border-radius:15px;background:#fff}
-    .metric-label{font-size:12px;color:var(--muted)}
-    .metric-value{font-size:22px;font-weight:850;margin-top:4px}
-    .record-row{padding:12px 0;border-bottom:1px solid var(--line)}
+
+    .answer-banner{display:none}
+    .answer-panel{
+      position:relative;
+      overflow:visible;
+      margin-top:16px;
+      border:1px solid #d8e4e2;
+      border-radius:23px;
+      background:#fff;
+      box-shadow:0 18px 38px rgba(58,74,73,.10)
+    }
+    .answer-mascot{
+      position:absolute;
+      left:-9px;
+      top:-32px;
+      width:58px;height:58px;
+      display:grid;place-items:center;
+      border-radius:50%;
+      background:#fffaf0;
+      border:2px solid #eadac7;
+      box-shadow:0 8px 18px rgba(93,55,30,.12);
+      font-size:31px;
+      transform:rotate(-5deg)
+    }
+    .answer-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:18px 16px 16px 72px;
+      border-radius:22px 22px 0 0;
+      background:linear-gradient(90deg,#eaf8f6,#dff2f1)
+    }
+    .answer-result{
+      display:flex;align-items:center;gap:8px;
+      color:#24945f;font-size:16px;font-weight:900
+    }
+    .answer-result-icon{
+      width:27px;height:27px;display:grid;place-items:center;
+      border:3px solid #38a66f;border-radius:50%;font-size:14px
+    }
+    .answer-result.wrong{color:#c35460}
+    .answer-result.wrong .answer-result-icon{border-color:#e56d75}
+    .answer-badge{
+      padding:8px 11px;border-radius:999px;
+      background:#fff3c9;border:1px solid #e9cf8c;
+      color:#7b5721;font-size:11px;font-weight:850;white-space:nowrap
+    }
+    .analysis-wrap{padding:18px 14px 15px}
+    .analysis-heading{
+      display:flex;align-items:center;gap:9px;
+      margin:0 0 13px;color:#173d43;font-size:19px;font-weight:950
+    }
+    .analysis-heading:before{
+      content:"";width:6px;height:25px;border-radius:99px;background:var(--teal)
+    }
+    .analysis-list{
+      overflow:hidden;border:1px solid #e4ded8;border-radius:19px;background:#fff
+    }
+    .analysis-item{
+      display:grid;grid-template-columns:32px 1fr;gap:10px;
+      padding:15px 14px;border-bottom:1px solid #eee7e0
+    }
+    .analysis-item:last-child{border-bottom:0}
+    .analysis-icon{
+      width:29px;height:29px;display:grid;place-items:center;
+      border-radius:50%;color:#fff;font-weight:950;font-size:16px
+    }
+    .analysis-icon.ok{background:#34a86f}
+    .analysis-icon.bad{background:#f07175}
+    .analysis-title{color:#183b41;font-size:16px;font-weight:900;line-height:1.55}
+    .analysis-tag{
+      display:inline-block;margin:7px 0 5px;padding:3px 7px;border-radius:6px;
+      background:#fff0c9;color:#a46b12;font-size:10px;font-weight:850
+    }
+    .analysis-tag.correct{background:#e9f8ef;color:#24774f}
+    .analysis-text{color:#68767c;font-size:14px;line-height:1.8}
+    .ai-query-box{
+      margin-top:13px;padding:14px;border:1px solid #dfd6cb;border-radius:17px;
+      background:linear-gradient(145deg,#fffdf9,#fff7ec)
+    }
+    .ai-query-title{
+      display:flex;align-items:center;gap:8px;margin-bottom:6px;
+      color:#4c3527;font-size:15px;font-weight:900
+    }
+    .ai-query-note{
+      margin-bottom:11px;color:#7a6c63;font-size:12px;line-height:1.65
+    }
+    .ai-query-actions{
+      display:grid;grid-template-columns:1fr 1fr;gap:9px
+    }
+    .ai-query-btn{
+      display:flex;align-items:center;justify-content:center;gap:7px;
+      min-height:46px;padding:9px 10px;border-radius:14px;text-decoration:none;
+      font-size:13px;font-weight:850
+    }
+    .ai-query-btn.chatgpt{
+      color:#17635b;border:1px solid #aed8ce;background:#eaf8f4
+    }
+    .ai-query-btn.gemini{
+      color:#345b91;border:1px solid #bfd0ea;background:#eef4ff
+    }
+    .ai-copy-status{
+      min-height:18px;margin-top:8px;color:#8a6a3b;font-size:11px;text-align:center
+    }
+    .summary-card{
+      margin-top:13px;padding:15px;border:1px solid #e4ddd5;border-radius:17px;
+      background:#fffaf5
+    }
+    .summary-title{margin:0 0 7px;color:#75421f;font-size:15px;font-weight:900}
+    .summary-text{margin:0;color:#665b54;white-space:pre-wrap;line-height:1.82;font-size:14px}
+    details{
+      margin-top:11px;border:1px solid #e2d9cf;border-radius:14px;background:#fffaf4
+    }
+    summary{padding:12px 13px;font-weight:820;color:#634d3f;cursor:pointer}
+    .detail-body{padding:0 13px 13px;color:#5f6668;line-height:1.78;font-size:13px}
+    .note{padding:11px 12px;margin-top:9px;border-radius:13px;font-size:13px;line-height:1.72}
+    .note.source{background:#eef8f7;border:1px solid #cde4e1;color:#456b6c}
+    .note.memory{background:#fff6dd;border:1px solid #ecd49b;color:#7a5a21}
+    .note.correct{background:#fff0f2;border:1px solid #ecc6cc;color:#964450}
+
+    .quiz-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+    .search-results{display:grid;gap:10px;margin-top:12px}
+    .search-item{
+      padding:14px;border:1px solid var(--line);border-radius:16px;background:#fffdfa;
+      box-shadow:0 7px 17px rgba(84,49,28,.04)
+    }
+    .search-item-title{font-weight:850;line-height:1.58;color:#2b201b}
+    .search-item-meta{margin-top:6px;color:#82756d;font-size:11px}
+
+    .tabs{
+      display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:5px;
+      border:1px solid #e2d6ca;border-radius:15px;background:rgba(255,250,243,.9)
+    }
+    .tab-btn{min-height:43px;border:0;border-radius:11px;background:transparent;color:#7d6e64;font-weight:820}
+    .tab-btn.active{background:#fff;color:#75421f;box-shadow:0 5px 14px rgba(84,49,28,.08)}
+    .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:13px 0}
+    .metric{
+      padding:14px;border:1px solid var(--line);border-radius:17px;background:#fffdfa;
+      box-shadow:0 7px 18px rgba(84,49,28,.04)
+    }
+    .metric-label{font-size:12px;color:#87786e}
+    .metric-value{font-size:23px;font-weight:900;margin-top:4px;color:#75421f}
+    .record-row{padding:13px 0;border-bottom:1px solid #eee5dc}
     .record-row:last-child{border-bottom:0}
-    .record-title{font-weight:780;line-height:1.45}
-    .record-meta{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.6}
+    .record-title{font-weight:850;line-height:1.48;color:#2f231e}
+    .record-meta{font-size:12px;color:#85786f;margin-top:5px;line-height:1.65}
+
     .bottom-nav{
-      position:fixed;left:0;right:0;bottom:0;z-index:30;
+      position:fixed;left:0;right:0;bottom:0;z-index:40;
       padding:8px 10px calc(8px + env(safe-area-inset-bottom));
-      background:rgba(255,255,255,.94);backdrop-filter:blur(16px);
-      border-top:1px solid #dce4eb
+      background:rgba(255,253,249,.96);
+      backdrop-filter:blur(16px);
+      border-top:1px solid #e2d8cd;
+      box-shadow:0 -8px 24px rgba(82,49,29,.07)
     }
     .bottom-nav-inner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-    .nav-btn{min-height:54px;border:0;border-radius:12px;background:transparent;color:var(--muted);font-size:11px;font-weight:750}
+    .nav-btn{min-height:55px;border:0;border-radius:13px;background:transparent;color:#87786e;font-size:11px;font-weight:800}
     .nav-btn span{display:block;font-size:20px;margin-bottom:2px}
-    .nav-btn.active{color:var(--primary);background:#edf4f8}
+    .nav-btn.active{color:#75421f;background:#fff0df}
+
     .toast{
-      position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));z-index:50;
+      position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));z-index:50;
       transform:translate(-50%,20px);opacity:0;pointer-events:none;
-      padding:10px 14px;border-radius:12px;background:#263548;color:#fff;font-size:13px;
-      transition:.22s
+      padding:11px 15px;border-radius:13px;background:#5e361f;color:#fff;font-size:13px;
+      box-shadow:0 10px 24px rgba(67,37,19,.22);transition:.22s
     }
     .toast.show{opacity:1;transform:translate(-50%,0)}
     .hidden{display:none!important}
+
     @media(min-width:700px){
-      .metrics{grid-template-columns:repeat(4,1fr)}
+      .metrics{grid-template-columns:repeat(3,1fr)}
       .form-grid.two-col{grid-template-columns:1fr 1fr}
     }
+    @media(max-width:430px){
+      .hero h1{font-size:26px}
+      .practice-title{font-size:29px}
+      .question-text{font-size:19px}
+      .answer-head{padding-left:64px}
+      .answer-badge{font-size:10px;padding:7px 9px}
+    }
+
+    /* iPad Air 11 吋與一般平板最佳化 */
+    .tablet-badge{
+      display:none;
+      margin-left:8px;
+      padding:4px 8px;
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:999px;
+      background:rgba(255,255,255,.11);
+      color:rgba(255,255,255,.88);
+      font-size:10px;
+      font-weight:850;
+      vertical-align:middle;
+    }
+
+    .home-grid{
+      display:block;
+    }
+
+    .home-setup,
+    .home-progress-panel{
+      min-width:0;
+    }
+
+    .practice-layout{
+      display:block;
+    }
+
+    .practice-question-pane,
+    .practice-answer-pane{
+      min-width:0;
+    }
+
+    @media (min-width:768px){
+      body{
+        padding-bottom:calc(94px + env(safe-area-inset-bottom));
+      }
+
+      .app{
+        width:calc(100% - 32px);
+        max-width:1120px;
+        padding:0 20px;
+      }
+
+      .topbar{
+        margin:0 -20px;
+        padding-left:24px;
+        padding-right:24px;
+      }
+
+      .tablet-badge{
+        display:inline-flex;
+      }
+
+      .view{
+        padding-top:22px;
+      }
+
+      .hero{
+        padding:31px 30px;
+        border-radius:28px;
+      }
+
+      .hero h1{
+        font-size:36px;
+      }
+
+      .hero p{
+        max-width:720px;
+        font-size:16px;
+      }
+
+      .home-grid{
+        display:grid;
+        grid-template-columns:minmax(330px,.92fr) minmax(370px,1.08fr);
+        gap:20px;
+        align-items:start;
+      }
+
+      .home-setup .card{
+        position:sticky;
+        top:92px;
+        margin-bottom:0;
+      }
+
+      .home-progress-panel{
+        padding:2px 0 0;
+      }
+
+      .home-progress-panel > .section-title{
+        margin-top:0;
+      }
+
+      .category-list{
+        max-height:680px;
+        overflow:auto;
+        padding-right:4px;
+        scrollbar-width:thin;
+      }
+
+      .category-row{
+        padding:16px 17px;
+      }
+
+      .form-grid.two-col{
+        grid-template-columns:1fr 1fr;
+      }
+
+      label.field{
+        font-size:14px;
+      }
+
+      select,
+      input[type="search"]{
+        min-height:54px;
+        font-size:16px;
+      }
+
+      .seg-btn{
+        min-height:50px;
+        font-size:14px;
+      }
+
+      .primary-btn,
+      .secondary-btn,
+      .danger-btn,
+      .skip-btn{
+        min-height:54px;
+        font-size:15px;
+      }
+
+      .practice-title{
+        font-size:38px;
+        margin-bottom:16px;
+      }
+
+      .quiz-head{
+        margin-bottom:12px;
+      }
+
+      .quiz-meta{
+        font-size:14px;
+      }
+
+      .jump-row{
+        padding:13px 14px;
+      }
+
+      .question-card{
+        padding:25px 24px 23px;
+        border-radius:24px;
+      }
+
+      .question-text{
+        font-size:24px;
+        line-height:1.76;
+      }
+
+      .option-btn{
+        padding:16px 17px;
+        min-height:62px;
+        font-size:16px;
+      }
+
+      .option-key{
+        width:34px;
+        height:34px;
+        flex-basis:34px;
+        font-size:14px;
+      }
+
+      .answer-panel{
+        border-radius:26px;
+      }
+
+      .answer-head{
+        padding:21px 20px 19px 78px;
+      }
+
+      .answer-result{
+        font-size:18px;
+      }
+
+      .analysis-wrap{
+        padding:21px 18px 18px;
+      }
+
+      .analysis-heading{
+        font-size:21px;
+      }
+
+      .analysis-item{
+        grid-template-columns:36px 1fr;
+        gap:12px;
+        padding:17px 16px;
+      }
+
+      .analysis-title{
+        font-size:17px;
+      }
+
+      .analysis-text,
+      .summary-text{
+        font-size:15px;
+      }
+
+      .ai-query-actions{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .ai-query-btn{
+        min-height:52px;
+        font-size:15px;
+      }
+
+      .search-results{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px;
+      }
+
+      .search-item{
+        min-height:132px;
+      }
+
+      .metrics{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+
+      .metric{
+        min-height:105px;
+      }
+
+      .metric-value{
+        font-size:28px;
+      }
+
+      .record-row{
+        padding:15px 0;
+      }
+    }
+
+    /* iPad Air 11 吋橫向：題目與解析左右並排 */
+    @media (min-width:1024px){
+      body{
+        padding-bottom:26px;
+      }
+
+      .app{
+        width:calc(100% - 126px);
+        max-width:none;
+        margin-left:110px;
+        margin-right:16px;
+        padding:0 24px 28px;
+      }
+
+      .topbar{
+        margin:0 -24px;
+      }
+
+      .bottom-nav{
+        left:14px;
+        right:auto;
+        top:calc(94px + env(safe-area-inset-top));
+        bottom:auto;
+        width:82px;
+        padding:8px;
+        border:1px solid #e2d8cd;
+        border-radius:22px;
+        box-shadow:0 14px 34px rgba(82,49,29,.12);
+      }
+
+      .bottom-nav-inner{
+        grid-template-columns:1fr;
+        gap:7px;
+      }
+
+      .nav-btn{
+        min-height:66px;
+      }
+
+      .home-grid{
+        grid-template-columns:minmax(360px,.8fr) minmax(520px,1.2fr);
+        gap:24px;
+      }
+
+      .category-list{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        max-height:700px;
+        gap:11px;
+      }
+
+      .category-row{
+        min-height:142px;
+      }
+
+      #practiceView.has-answer .practice-layout{
+        display:grid;
+        grid-template-columns:minmax(0,.93fr) minmax(0,1.07fr);
+        gap:22px;
+        align-items:start;
+      }
+
+      #practiceView.has-answer .practice-answer-pane{
+        position:sticky;
+        top:94px;
+        max-height:calc(100vh - 118px);
+        overflow:auto;
+        padding-right:4px;
+        scrollbar-width:thin;
+      }
+
+      #practiceView:not(.has-answer) .practice-question-pane{
+        max-width:920px;
+        margin:0 auto;
+      }
+
+      .quiz-actions{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .search-results{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+
+      .metrics{
+        grid-template-columns:repeat(6,minmax(0,1fr));
+      }
+    }
+
+    /* iPad 直向尺寸微調 */
+    @media (min-width:768px) and (max-width:1023px){
+      .home-grid{
+        grid-template-columns:minmax(310px,.9fr) minmax(360px,1.1fr);
+      }
+
+      .category-list{
+        max-height:740px;
+      }
+
+      .practice-layout{
+        max-width:900px;
+        margin:0 auto;
+      }
+    }
+
+    /* iPad 橫向高度較低時，避免頂部與側欄過度佔位 */
+    @media (min-width:1024px) and (max-height:850px){
+      .topbar{
+        padding-top:calc(9px + env(safe-area-inset-top));
+        padding-bottom:9px;
+      }
+
+      .bottom-nav{
+        top:calc(78px + env(safe-area-inset-top));
+      }
+
+      .home-setup .card,
+      #practiceView.has-answer .practice-answer-pane{
+        top:78px;
+      }
+
+      .category-list{
+        max-height:560px;
+      }
+    }
+
+    .topbar-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .auth-open-btn{
+      min-height:42px;
+      padding:0 12px;
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:14px;
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      font-size:12px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .sync-card{
+      border-color:#cfe3df;
+      background:linear-gradient(145deg,#fffdf9,#eef8f6);
+    }
+    .sync-status-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .sync-user{
+      font-weight:900;
+      color:#274b4b;
+      line-height:1.5;
+    }
+    .sync-status{
+      margin-top:4px;
+      color:#6f7776;
+      font-size:12px;
+      line-height:1.6;
+    }
+    [data-sync-state="ok"] .sync-status{color:#267c56}
+    [data-sync-state="working"] .sync-status{color:#8b641f}
+    [data-sync-state="error"] .sync-status{color:#b24d59}
+    .sync-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+    }
+
+    .auth-modal{
+      position:fixed;
+      inset:0;
+      z-index:100;
+      display:grid;
+      place-items:center;
+      padding:18px;
+      background:rgba(35,22,15,.58);
+      backdrop-filter:blur(8px);
+    }
+    .auth-dialog{
+      width:min(100%,480px);
+      max-height:calc(100vh - 36px);
+      overflow:auto;
+      border:1px solid #e5d8ca;
+      border-radius:24px;
+      background:#fffdf9;
+      box-shadow:0 28px 70px rgba(42,23,13,.28);
+    }
+    .auth-dialog-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 18px 14px;
+      border-bottom:1px solid #eee3d7;
+      background:linear-gradient(145deg,#fff7eb,#eef8f6);
+      border-radius:24px 24px 0 0;
+    }
+    .auth-dialog-title{
+      font-size:19px;
+      font-weight:950;
+      color:#4d3425;
+    }
+    .auth-dialog-sub{
+      margin-top:4px;
+      color:#786a61;
+      font-size:12px;
+      line-height:1.55;
+    }
+    .auth-close-btn{
+      width:38px;
+      height:38px;
+      border:1px solid #dfd2c4;
+      border-radius:12px;
+      background:#fff;
+      color:#755b4b;
+      font-size:20px;
+    }
+    .auth-dialog-body{
+      padding:18px;
+    }
+    .auth-provider-btn{
+      width:100%;
+      min-height:50px;
+      border:1px solid #cddfdc;
+      border-radius:14px;
+      background:#edf8f5;
+      color:#246a61;
+      font-weight:900;
+    }
+    .auth-divider{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:15px 0;
+      color:#9a8c82;
+      font-size:11px;
+    }
+    .auth-divider:before,
+    .auth-divider:after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:#e6dbcf;
+    }
+    .auth-form{
+      display:grid;
+      gap:10px;
+    }
+    .auth-form input{
+      width:100%;
+      min-height:49px;
+      padding:0 13px;
+      border:1px solid #dfd2c4;
+      border-radius:13px;
+      background:#fff;
+      outline:none;
+    }
+    .auth-form input:focus{
+      border-color:#bc7f48;
+      box-shadow:0 0 0 3px rgba(213,139,69,.12);
+    }
+    .auth-grid-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+    }
+    .auth-link-btn{
+      border:0;
+      background:transparent;
+      color:#75513a;
+      font-size:12px;
+      text-decoration:underline;
+    }
+    .auth-message{
+      min-height:20px;
+      margin-top:10px;
+      color:#69746f;
+      font-size:12px;
+      line-height:1.6;
+    }
+    .auth-message.error{
+      color:#b24d59;
+    }
+    .auth-user-panel{
+      display:grid;
+      gap:12px;
+    }
+    .auth-user-card{
+      padding:14px;
+      border:1px solid #d5e4e1;
+      border-radius:16px;
+      background:#f0f8f6;
+    }
+    .auth-user-name{
+      color:#274b4b;
+      font-size:17px;
+      font-weight:950;
+    }
+    .auth-user-email{
+      margin-top:4px;
+      color:#6f7776;
+      font-size:12px;
+      word-break:break-all;
+    }
+    .auth-notice{
+      padding:11px 12px;
+      border:1px solid #ead6a6;
+      border-radius:13px;
+      background:#fff7df;
+      color:#7b5b25;
+      font-size:12px;
+      line-height:1.7;
+    }
+    .auth-sync-feedback{
+      padding:12px;
+      border:1px solid #d5e4e1;
+      border-radius:14px;
+      background:#f3faf8;
+    }
+    .auth-sync-feedback[data-sync-state="working"]{
+      border-color:#ead6a6;
+      background:#fff8e7;
+    }
+    .auth-sync-feedback[data-sync-state="error"]{
+      border-color:#efc8cd;
+      background:#fff2f3;
+    }
+    [data-sync-now]:disabled,
+    [data-test-firebase]:disabled{
+      cursor:wait;
+      opacity:.62;
+    }
+
+    @media(max-width:520px){
+      .brand-sub{
+        max-width:170px;
+      }
+      .auth-open-btn{
+        width:43px;
+        padding:0;
+        font-size:0;
+      }
+      .auth-open-btn:before{
+        content:"☁";
+        font-size:18px;
+      }
+      .sync-actions,
+      .auth-grid-actions{
+        grid-template-columns:1fr;
+      }
+    }
+
+
+    .gemini-note-box{
+      --note-blue:#496eae;
+      --note-green:#2f8069;
+      margin-top:15px;
+      overflow:hidden;
+      border:1px solid #d5dbe7;
+      border-radius:22px;
+      background:#fff;
+      box-shadow:0 12px 28px rgba(61,69,91,.08)
+    }
+    .gemini-note-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:15px 16px;
+      border-bottom:1px solid #e8e8eb;
+      background:linear-gradient(135deg,#f7f2ff,#edf7ff)
+    }
+    .gemini-note-title-wrap{display:flex;align-items:center;gap:10px;min-width:0}
+    .gemini-note-logo{
+      display:grid;place-items:center;flex:0 0 auto;
+      width:38px;height:38px;border-radius:13px;
+      background:linear-gradient(135deg,#5a75bd,#765aae);
+      color:#fff;font-size:19px;box-shadow:0 7px 14px rgba(91,86,160,.19)
+    }
+    .gemini-note-title{
+      color:#334a72;font-size:16px;font-weight:950;line-height:1.35
+    }
+    .gemini-note-subtitle{
+      margin-top:2px;color:#7c8799;font-size:11px;line-height:1.45
+    }
+    .gemini-note-badge{
+      flex:0 0 auto;padding:6px 9px;border:1px solid #d4dbe8;border-radius:999px;
+      background:#fff;color:#748096;font-size:10px;font-weight:900
+    }
+    .gemini-note-badge.saved{
+      border-color:#a8d6c7;background:#eaf8f3;color:#27735e
+    }
+    .gemini-note-badge.editing{
+      border-color:#e5c98c;background:#fff7df;color:#80601f
+    }
+    .gemini-note-body{padding:15px}
+    .gemini-note-state.hidden{display:none!important}
+
+    /* 尚未建立筆記 */
+    .gemini-note-empty{
+      padding:20px 15px;
+      border:1.5px dashed #cdd6e5;border-radius:18px;
+      background:
+        radial-gradient(circle at 18px 18px,rgba(112,132,173,.08) 2px,transparent 2.5px) 0 0/28px 28px,
+        linear-gradient(145deg,#fbfcff,#f4f7fb);
+      text-align:center
+    }
+    .gemini-note-empty-icon{
+      display:grid;place-items:center;width:62px;height:62px;margin:0 auto 11px;
+      border-radius:20px;background:#fff;color:#607cb5;font-size:29px;
+      box-shadow:0 9px 22px rgba(76,101,148,.13)
+    }
+    .gemini-note-empty-title{
+      color:#425571;font-size:16px;font-weight:950
+    }
+    .gemini-note-empty-text{
+      max-width:520px;margin:7px auto 14px;color:#7a8798;font-size:12px;line-height:1.75
+    }
+    .gemini-note-empty-actions{
+      display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:560px;margin:auto
+    }
+
+    /* 已儲存筆記 */
+    .gemini-note-saved{
+      border:1px solid #cbe1da;border-radius:18px;
+      background:linear-gradient(145deg,#fbfffd,#f0faf6)
+    }
+    .gemini-note-saved-top{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+      padding:13px 14px;border-bottom:1px solid #dcece6
+    }
+    .gemini-note-saved-label{
+      display:flex;align-items:center;gap:7px;color:#286d5a;
+      font-size:13px;font-weight:950
+    }
+    .gemini-note-saved-label:before{
+      content:"✓";display:grid;place-items:center;width:22px;height:22px;
+      border-radius:50%;background:#d9f2e8;color:#237159;font-size:12px
+    }
+    .gemini-note-time{
+      color:#778982;font-size:10px;line-height:1.55;text-align:right
+    }
+    .gemini-note-display{
+      max-height:480px;overflow:auto;padding:16px;
+      background:#fff;color:#34465b;font-size:14px;line-height:1.9;
+      white-space:pre-wrap;word-break:break-word
+    }
+    .gemini-note-display.is-collapsed{max-height:260px}
+    .gemini-note-saved-actions{
+      display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;
+      padding:12px 13px;border-top:1px solid #dcece6
+    }
+
+    /* 新增或修改筆記 */
+    .gemini-note-editor{
+      padding:14px;border:1px solid #e5d6ad;border-radius:18px;
+      background:linear-gradient(145deg,#fffdf7,#fff8e8)
+    }
+    .gemini-note-editor-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+      margin-bottom:10px
+    }
+    .gemini-note-editor-title{
+      color:#77581f;font-size:14px;font-weight:950
+    }
+    .gemini-note-editor-help{
+      margin-top:3px;color:#8b7b5b;font-size:11px;line-height:1.55
+    }
+    .gemini-note-editor-tools{
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px
+    }
+    .gemini-note-textarea{
+      width:100%;min-height:220px;padding:14px;resize:vertical;
+      border:1px solid #dacaa8;border-radius:14px;background:#fff;color:#33445d;
+      font:inherit;font-size:14px;line-height:1.85;outline:none
+    }
+    .gemini-note-textarea:focus{
+      border-color:#b99955;box-shadow:0 0 0 3px rgba(185,153,85,.13)
+    }
+    .gemini-note-editor-footer{
+      display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:9px
+    }
+
+    .gemini-note-btn{
+      min-height:44px;padding:8px 11px;border-radius:13px;
+      font-size:12px;font-weight:900
+    }
+    .gemini-note-btn.primary{
+      border:1px solid #5872ae;background:linear-gradient(135deg,#4f77b9,#6d5baa);
+      color:#fff
+    }
+    .gemini-note-btn.secondary{
+      border:1px solid #b9c8df;background:#fff;color:#405f92
+    }
+    .gemini-note-btn.success{
+      border:1px solid #8dc7b3;background:#eaf8f3;color:#286f5d
+    }
+    .gemini-note-btn.warning{
+      border:1px solid #ddc27f;background:#fff8e5;color:#806022
+    }
+    .gemini-note-btn.danger{
+      border:1px solid #dfbbc2;background:#fff2f4;color:#a23f50
+    }
+    .gemini-note-btn:disabled{cursor:wait;opacity:.62}
+    .gemini-note-status{
+      min-height:20px;margin-top:9px;color:#6f7c91;font-size:11px;line-height:1.55
+    }
+    .gemini-note-status.ok{color:#237654}
+    .gemini-note-status.error{color:#ad4351}
+    .gemini-note-status.working{color:#8a661e}
+    .gemini-note-login-hint{
+      margin-top:9px;padding:9px 10px;border:1px solid #e7d7ae;border-radius:11px;
+      background:#fff9e9;color:#795c2b;font-size:11px;line-height:1.6
+    }
+    .gemini-note-copy-status{
+      min-height:18px;margin-top:7px;color:#60738f;font-size:10px;line-height:1.5
+    }
+
+    @media(max-width:620px){
+      .gemini-note-head{align-items:flex-start}
+      .gemini-note-empty-actions,
+      .gemini-note-editor-tools,
+      .gemini-note-editor-footer{grid-template-columns:1fr}
+      .gemini-note-saved-actions{grid-template-columns:1fr 1fr}
+      .gemini-note-saved-actions .gemini-note-btn.danger{grid-column:1/-1}
+    }
+
+
+    .gemini-note-lock-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 13px;
+      border-bottom:1px solid #dcece6;
+      background:#f5fbf8;
+    }
+    .gemini-note-lock-state{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      color:#356d5e;
+      font-size:11px;
+      font-weight:900;
+    }
+    .gemini-note-lock-icon{
+      display:grid;
+      place-items:center;
+      width:25px;
+      height:25px;
+      border:1px solid #add3c5;
+      border-radius:9px;
+      background:#e6f6f0;
+      font-size:13px;
+    }
+    .gemini-note-readonly{
+      width:100%;
+      min-height:220px;
+      max-height:480px;
+      padding:16px;
+      resize:vertical;
+      border:0;
+      border-radius:0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          #fbfdfc 0,
+          #fbfdfc 31px,
+          #eef5f2 32px
+        );
+      color:#34465b;
+      font:inherit;
+      font-size:14px;
+      line-height:1.9;
+      outline:none;
+      white-space:pre-wrap;
+      word-break:break-word;
+      cursor:default;
+    }
+    .gemini-note-readonly:focus{
+      box-shadow:inset 0 0 0 2px rgba(68,116,98,.12);
+    }
+    .gemini-note-readonly.is-collapsed{
+      max-height:260px;
+    }
+    .gemini-note-readonly[readonly]{
+      caret-color:transparent;
+    }
+    .gemini-note-edit-unlocked{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      margin-bottom:9px;
+      padding:9px 11px;
+      border:1px solid #e5c98c;
+      border-radius:11px;
+      background:#fff7df;
+      color:#80601f;
+      font-size:11px;
+      font-weight:900;
+    }
+    .analysis-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;padding:9px 10px;border:1px solid #dbe8e4;border-radius:12px;background:#f7fbfa}
+    .analysis-tools-note{color:#6d7d7a;font-size:11px;line-height:1.55}.analysis-sync-badge{flex:0 0 auto;padding:5px 8px;border:1px solid #d3dfdc;border-radius:999px;background:#fff;color:#687a76;font-size:10px;font-weight:900}
+    .analysis-content{min-width:0}.analysis-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.analysis-edit-btn{flex:0 0 auto;min-height:34px;padding:6px 10px;border:1px solid #d9c496;border-radius:10px;background:#fff8e8;color:#7b5b22;font-size:10px;font-weight:900}
+    .analysis-custom-badge{display:inline-flex;align-items:center;gap:4px;margin-left:6px;padding:3px 6px;border:1px solid #9fd2bf;border-radius:999px;background:#eaf8f3;color:#24715b;font-size:9px;font-weight:900;vertical-align:middle}.analysis-text{margin-top:7px;padding:10px 11px;border:1px solid transparent;border-radius:11px}.analysis-text.customized{border-color:#b8ddcf;background:#f1faf6;color:#345e53}
+    .analysis-editor{margin-top:10px;padding:11px;border:1px solid #e4ce9b;border-radius:13px;background:#fff9e9}.analysis-editor.hidden{display:none!important}.analysis-editor-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}.analysis-editor-title{color:#76571e;font-size:11px;font-weight:950}.analysis-editor-lock{color:#8e7c57;font-size:9px}
+    .analysis-editor-textarea{width:100%;min-height:130px;padding:11px;resize:vertical;border:1px solid #dcc797;border-radius:11px;background:#fff;color:#34465b;font:inherit;font-size:13px;line-height:1.75;outline:none}.analysis-editor-textarea:focus{border-color:#b99549;box-shadow:0 0 0 3px rgba(185,149,73,.13)}
+    .analysis-editor-actions{display:grid;grid-template-columns:1fr 1fr auto;gap:7px;margin-top:8px}.analysis-editor-actions button{min-height:37px;padding:6px 9px;border-radius:10px;font-size:10px;font-weight:900}.analysis-save-btn{border:1px solid #8fc7b3;background:#eaf8f3;color:#286f5d}.analysis-cancel-btn{border:1px solid #cbd5dd;background:#fff;color:#62717d}.analysis-reset-btn{border:1px solid #dfbbc2;background:#fff2f4;color:#9c4150}.analysis-item-status{min-height:16px;margin-top:6px;color:#6e7d79;font-size:9px;line-height:1.45}.analysis-item-status.ok{color:#237654}.analysis-item-status.error{color:#ad4351}.analysis-item-status.working{color:#8a661e}
+    @media(max-width:620px){.analysis-title-row{display:block}.analysis-edit-btn{margin-top:7px}.analysis-editor-actions{grid-template-columns:1fr 1fr}.analysis-reset-btn{grid-column:1/-1}}
+    .analysis-global-edit-btn{
+      flex:0 0 auto;
+      min-height:38px;
+      padding:7px 12px;
+      border:1px solid #d4bd88;
+      border-radius:11px;
+      background:linear-gradient(145deg,#fff9e8,#fff1ca);
+      color:#76561e;
+      font-size:11px;
+      font-weight:950;
+      white-space:nowrap;
+    }
+    .analysis-global-edit-btn:hover{background:#ffefbd}
+    .analysis-global-edit-btn:disabled{opacity:.6;cursor:wait}
+
+    .analysis-item .analysis-title-row{
+      display:block;
+    }
+    .analysis-item .analysis-custom-badge{
+      margin-left:7px;
+    }
+
+    .analysis-bulk-editor{
+      margin-top:12px;
+      padding:14px;
+      border:1px solid #dfc78e;
+      border-radius:17px;
+      background:linear-gradient(145deg,#fffdf6,#fff6dc);
+      box-shadow:0 8px 18px rgba(121,91,31,.06);
+    }
+    .analysis-bulk-editor.hidden{display:none!important}
+    .analysis-bulk-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .analysis-bulk-title{
+      color:#694a18;
+      font-size:14px;
+      font-weight:950;
+    }
+    .analysis-bulk-note{
+      margin-top:3px;
+      color:#8a7651;
+      font-size:10px;
+      line-height:1.6;
+    }
+    .analysis-bulk-lock{
+      flex:0 0 auto;
+      padding:5px 8px;
+      border:1px solid #e1c77e;
+      border-radius:999px;
+      background:#fff6dc;
+      color:#7d5c1f;
+      font-size:9px;
+      font-weight:900;
+    }
+    .analysis-bulk-section{
+      margin-top:10px;
+      padding:11px;
+      border:1px solid #eadbb6;
+      border-radius:13px;
+      background:rgba(255,255,255,.8);
+    }
+    .analysis-bulk-section:first-of-type{margin-top:0}
+    .analysis-bulk-label{
+      display:flex;
+      align-items:flex-start;
+      gap:7px;
+      margin-bottom:7px;
+      color:#435057;
+      font-size:11px;
+      font-weight:950;
+      line-height:1.55;
+    }
+    .analysis-bulk-label .option-pill{
+      flex:0 0 auto;
+      display:inline-grid;
+      place-items:center;
+      min-width:25px;
+      height:25px;
+      padding:0 6px;
+      border-radius:8px;
+      background:#edf6f4;
+      color:#2c7567;
+      font-size:10px;
+      font-weight:950;
+    }
+    .analysis-bulk-textarea{
+      width:100%;
+      min-height:120px;
+      padding:11px 12px;
+      resize:vertical;
+      border:1px solid #d9c696;
+      border-radius:11px;
+      background:#fff;
+      color:#34465b;
+      font:inherit;
+      font-size:13px;
+      line-height:1.75;
+      outline:none;
+    }
+    .analysis-bulk-textarea:focus{
+      border-color:#b79342;
+      box-shadow:0 0 0 3px rgba(183,147,66,.13);
+    }
+    .analysis-bulk-summary{
+      border-color:#d8c7bb;
+      background:#fffaf6;
+    }
+    .analysis-bulk-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr auto;
+      gap:8px;
+      margin-top:11px;
+    }
+    .analysis-bulk-actions button{
+      min-height:41px;
+      padding:7px 10px;
+      border-radius:11px;
+      font-size:10px;
+      font-weight:950;
+    }
+    .analysis-bulk-save{
+      border:1px solid #86c4af;
+      background:#e9f8f2;
+      color:#286f5c;
+    }
+    .analysis-bulk-cancel{
+      border:1px solid #cbd5dd;
+      background:#fff;
+      color:#5e6e79;
+    }
+    .analysis-bulk-original{
+      border:1px solid #dfbbc2;
+      background:#fff2f4;
+      color:#99404f;
+    }
+    .analysis-bulk-status{
+      min-height:18px;
+      margin-top:7px;
+      color:#697b76;
+      font-size:10px;
+      line-height:1.55;
+    }
+    .analysis-bulk-status.ok{color:#237654}
+    .analysis-bulk-status.error{color:#ad4351}
+    .analysis-bulk-status.working{color:#8a661e}
+
+    .summary-title-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:7px;
+    }
+    .summary-title-row .summary-title{margin:0}
+    .summary-lock-badge{
+      flex:0 0 auto;
+      padding:5px 8px;
+      border:1px solid #ddd0c4;
+      border-radius:999px;
+      background:#fff;
+      color:#826b5b;
+      font-size:9px;
+      font-weight:900;
+    }
+    .summary-custom-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      margin-left:6px;
+      padding:3px 6px;
+      border:1px solid #9fd2bf;
+      border-radius:999px;
+      background:#eaf8f3;
+      color:#24715b;
+      font-size:9px;
+      font-weight:900;
+      vertical-align:middle;
+    }
+    .summary-text.customized{
+      padding:10px 11px;
+      border:1px solid #b8ddcf;
+      border-radius:11px;
+      background:#f1faf6;
+      color:#345e53;
+    }
+
+    @media(max-width:620px){
+      .analysis-tools{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+      .analysis-global-edit-btn{
+        width:100%;
+      }
+      .analysis-bulk-actions{
+        grid-template-columns:1fr 1fr;
+      }
+      .analysis-bulk-original{
+        grid-column:1/-1;
+      }
+      .summary-title-row{
+        align-items:flex-start;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -214,13 +1510,21 @@
   <header class="topbar">
     <div class="topbar-row">
       <div class="brand">
-        <div class="brand-mark">📘</div>
+        <div class="brand-mark">🐾</div>
         <div>
-          <div class="brand-title">政府採購題庫</div>
-          <div class="brand-sub">iPhone 略過題號註記版</div>
+          <div class="brand-title">
+            政府採購題庫
+            <span class="tablet-badge">iPad Air 11 吋最佳化</span>
+          </div>
+          <div class="brand-sub">iPhone＋iPad＋電腦 Firebase 同步＋記憶重點可修改版</div>
         </div>
       </div>
-      <button class="icon-btn" id="shareBtn" aria-label="分享">↗</button>
+      <div class="topbar-actions">
+        <button class="auth-open-btn" type="button" data-open-auth>
+          ☁ <span data-auth-button-label>登入同步</span>
+        </button>
+        <button class="icon-btn" id="shareBtn" aria-label="分享">↗</button>
+      </div>
     </div>
   </header>
 
@@ -229,56 +1533,63 @@
       <div class="hero">
         <small>政府採購學習中心</small>
         <h1>隨時練習，逐題掌握</h1>
-        <p>依主題練習全部題目，作答後立即查看詳解。學習紀錄只保存在這台裝置。</p>
+        <p>依主題逐題練習，作答後查看精選詳解與選項分析。</p>
         <div class="chips">
           <span class="chip" id="totalChip"></span>
           <span class="chip" id="categoryChip"></span>
-          <span class="chip">離線可用</span>
+
         </div>
       </div>
 
-      <div class="card">
-        <div class="section-title">開始練習</div>
-        <div class="form-grid two-col">
-          <label class="field">主題
-            <select id="categorySelect"></select>
-          </label>
-          <label class="field" id="orderField">題目順序
-            <select id="orderSelect">
-              <option value="number">依原題號</option>
-              <option value="random">隨機順序</option>
-            </select>
-          </label>
-        </div>
-        <div class="section-title">題型</div>
-        <div class="segmented" id="typeSegment">
-          <button class="seg-btn active" data-type="all">全部</button>
-          <button class="seg-btn" data-type="choice">選擇題</button>
-          <button class="seg-btn" data-type="true_false">是非題</button>
+      <div class="home-grid">
+        <div class="home-setup">
+          <div class="card">
+            <div class="section-title">開始練習</div>
+            <div class="form-grid two-col">
+              <label class="field">主題
+                <select id="categorySelect"></select>
+              </label>
+              <label class="field" id="orderField">題目順序
+                <select id="orderSelect">
+                  <option value="number">依原題號</option>
+                  <option value="random">隨機順序</option>
+                </select>
+              </label>
+            </div>
+            <div class="section-title">題型</div>
+            <div class="segmented" id="typeSegment">
+              <button class="seg-btn active" data-type="all">全部</button>
+              <button class="seg-btn" data-type="choice">選擇題</button>
+              <button class="seg-btn" data-type="true_false">是非題</button>
+            </div>
+
+            <div class="section-title">練習範圍</div>
+            <div class="segmented two" id="scopeSegment">
+              <button class="seg-btn active" data-scope="all">全部題目</button>
+              <button class="seg-btn" data-scope="single">指定題號</button>
+            </div>
+
+            <div id="singleQuestionControls" class="single-question-controls hidden">
+              <label class="field">選擇題號
+                <select id="questionSelect"></select>
+              </label>
+              <div class="question-preview" id="questionPreview"></div>
+            </div>
+
+            <div style="height:12px"></div>
+            <button class="primary-btn" id="startBtn">▶ 練習此主題全部題目</button>
+          </div>
         </div>
 
-        <div class="section-title">練習範圍</div>
-        <div class="segmented two" id="scopeSegment">
-          <button class="seg-btn active" data-scope="all">全部題目</button>
-          <button class="seg-btn" data-scope="single">指定題號</button>
+        <div class="home-progress-panel">
+          <div class="section-title">各主題進度</div>
+          <div id="categoryProgress" class="category-list"></div>
         </div>
-
-        <div id="singleQuestionControls" class="single-question-controls hidden">
-          <label class="field">選擇題號
-            <select id="questionSelect"></select>
-          </label>
-          <div class="question-preview" id="questionPreview"></div>
-        </div>
-
-        <div style="height:12px"></div>
-        <button class="primary-btn" id="startBtn">▶ 練習此主題全部題目</button>
       </div>
-
-      <div class="section-title">各主題進度</div>
-      <div id="categoryProgress" class="category-list"></div>
     </section>
 
     <section id="practiceView" class="view">
+      <div class="practice-title"><span>這題你會嗎</span></div>
       <div class="quiz-head">
         <div class="quiz-meta" id="quizMeta"></div>
         <span id="questionStatus" class="status none"></span>
@@ -289,22 +1600,28 @@
           <select id="jumpSelect"></select>
         </label>
       </div>
-      <article class="question-card">
-        <div class="question-number" id="questionNumber"></div>
-        <div class="question-text" id="questionText"></div>
-        <div class="options" id="options"></div>
-      </article>
-      <div id="answerArea"></div>
-      <div class="quiz-actions">
-        <button class="secondary-btn" id="prevBtn">← 上一題</button>
-        <button class="secondary-btn" id="favoriteBtn">☆ 收藏</button>
+      <div class="practice-layout">
+        <div class="practice-question-pane">
+          <article class="question-card">
+            <div class="question-number" id="questionNumber"></div>
+            <div class="question-text" id="questionText"></div>
+            <div class="options" id="options"></div>
+          </article>
+          <div class="quiz-actions">
+            <button class="secondary-btn" id="prevBtn">← 上一題</button>
+            <button class="secondary-btn" id="favoriteBtn">☆ 收藏</button>
+          </div>
+          <div style="height:9px"></div>
+          <button class="primary-btn" id="submitBtn">送出答案</button>
+          <div style="height:9px"></div>
+          <button class="skip-btn" id="skipBtn">略過本題，直接下一題 →</button>
+          <div style="height:9px"></div>
+          <button class="secondary-btn hidden" id="nextBtn">下一題 →</button>
+        </div>
+        <aside class="practice-answer-pane">
+          <div id="answerArea"></div>
+        </aside>
       </div>
-      <div style="height:9px"></div>
-      <button class="primary-btn" id="submitBtn">送出答案</button>
-      <div style="height:9px"></div>
-      <button class="skip-btn" id="skipBtn">略過本題，直接下一題 →</button>
-      <div style="height:9px"></div>
-      <button class="secondary-btn hidden" id="nextBtn">下一題 →</button>
     </section>
 
     <section id="searchView" class="view">
@@ -340,6 +1657,27 @@
       </div>
       <div id="recordMetrics" class="metrics"></div>
       <div class="card" id="recordCategories"></div>
+
+      <div class="card sync-card" data-sync-state="local">
+        <div class="section-title">帳號與雲端同步</div>
+        <div class="sync-status-row">
+          <div>
+            <div class="sync-user" data-auth-user-name>尚未登入</div>
+            <div class="sync-status" data-sync-status>訪客模式：紀錄只保存在目前裝置。</div>
+            <div class="sync-status" data-last-sync></div>
+          </div>
+        </div>
+        <div class="sync-actions">
+          <button class="primary-btn" type="button" data-open-auth>
+            <span data-auth-button-label>登入同步</span>
+          </button>
+          <button class="secondary-btn" type="button" data-sync-now>
+            <span data-sync-button-label>立即同步</span>
+          </button>
+          <button class="secondary-btn" type="button" data-test-firebase>測試 Firebase 連線</button>
+        </div>
+      </div>
+
       <div class="card">
         <div class="section-title">備份與還原</div>
         <button class="secondary-btn" id="exportBtn">匯出學習紀錄</button>
@@ -354,6 +1692,58 @@
     </section>
   </main>
 </div>
+
+
+<div id="authModal" class="auth-modal hidden" role="dialog" aria-modal="true" aria-labelledby="authDialogTitle">
+  <div class="auth-dialog">
+    <div class="auth-dialog-head">
+      <div>
+        <div class="auth-dialog-title" id="authDialogTitle">登入與跨裝置同步</div>
+        <div class="auth-dialog-sub">同一帳號可在 iPhone、iPad 與電腦共用學習歷程。</div>
+      </div>
+      <button class="auth-close-btn" id="closeAuthBtn" type="button" aria-label="關閉">×</button>
+    </div>
+    <div class="auth-dialog-body">
+      <div data-auth-guest>
+        <button class="auth-provider-btn" id="googleLoginBtn" type="button">使用 Google 帳號登入</button>
+        <div class="auth-divider">或使用電子郵件</div>
+        <div class="auth-form">
+          <input id="authEmail" type="email" inputmode="email" autocomplete="email" placeholder="電子郵件">
+          <input id="authPassword" type="password" autocomplete="current-password" placeholder="密碼（至少6個字元）">
+          <div class="auth-grid-actions">
+            <button class="primary-btn" id="emailLoginBtn" type="button">登入</button>
+            <button class="secondary-btn" id="emailRegisterBtn" type="button">建立帳號</button>
+          </div>
+          <button class="auth-link-btn" id="passwordResetBtn" type="button">忘記密碼／寄送重設信</button>
+        </div>
+      </div>
+
+      <div class="auth-user-panel hidden" data-auth-user>
+        <div class="auth-user-card">
+          <div class="auth-user-name" data-auth-user-name>已登入使用者</div>
+          <div class="auth-user-email" data-auth-user-email></div>
+        </div>
+        <div class="auth-notice">
+          作答、略過與收藏會先保存在本機；有網路時自動同步至 Firestore。
+          不同裝置登入同一帳號後，系統會依各題最後更新時間合併紀錄。
+          首次上傳大量舊紀錄可能需要1至3分鐘，請保持頁面開啟。
+        </div>
+        <div class="auth-sync-feedback" data-sync-state="idle">
+          <div class="sync-status" data-sync-status>已登入，尚未開始同步。</div>
+          <div class="sync-status" data-last-sync></div>
+        </div>
+        <button class="primary-btn" type="button" data-sync-now>
+          <span data-sync-button-label>立即同步</span>
+        </button>
+        <button class="secondary-btn" type="button" data-test-firebase>測試 Firebase 連線</button>
+        <button class="secondary-btn" type="button" data-logout>登出</button>
+      </div>
+
+      <div class="auth-message" id="authMessage"></div>
+    </div>
+  </div>
+</div>
+
 
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
@@ -391,8 +1781,17 @@ const labelType=t=>t==="choice"?"選擇題":"是非題";
 function loadJSON(key,fallback){
   try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback}catch{return fallback}
 }
-function saveProgress(){localStorage.setItem(STORAGE_KEY,JSON.stringify(progress))}
-function saveSession(){localStorage.setItem(SESSION_KEY,JSON.stringify(session))}
+function saveProgress(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));
+  window.firebaseQuizSync?.queueProgressSync?.(progress)
+}
+function saveSession(){
+  if(session&&typeof session==="object"){
+    session={...session,updatedAtMs:Date.now()}
+  }
+  localStorage.setItem(SESSION_KEY,JSON.stringify(session));
+  window.firebaseQuizSync?.queueSessionSync?.(session)
+}
 function toast(msg){
   const t=$("toast");t.textContent=msg;t.classList.add("show");
   clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800)
@@ -440,6 +1839,696 @@ function numberOptionStatus(q){
     return skipped>1?`【曾略過 ${skipped} 次】`:"【曾略過】"
   }
   return ""
+}
+
+function buildAiQueryText(q){
+  const options=q.type==="choice"
+    ?(q.options||[]).map(o=>`(${o.key}) ${o.text}`).join("\n")
+    :"O 正確\nX 錯誤";
+
+  return [
+    "請協助分析以下政府採購題目，並依現行法規說明正確答案、各選項理由及記憶重點。請用繁體中文，依「建議答案、核心理由、逐選項分析、法規重點、容易混淆處、記憶重點」分段回答，且不要使用表格：",
+    "",
+    `主題：${q.category}`,
+    `題型：${labelType(q.type)}`,
+    `原題號：${q.number}`,
+    `題目：${q.question}`,
+    options?`選項：\n${options}`:"",
+    `題庫答案：${correctLabel(q,q.answer)}`,
+    q.source?`題庫法源／考點：${q.source}`:""
+  ].filter(Boolean).join("\n");
+}
+
+async function openAiQuery(service){
+  const q=currentQuestion();
+  if(!q)return;
+
+  const queryText=buildAiQueryText(q);
+  let copied=false;
+
+  try{
+    await navigator.clipboard.writeText(queryText);
+    copied=true;
+  }catch{
+    const area=document.createElement("textarea");
+    area.value=queryText;
+    area.style.position="fixed";
+    area.style.opacity="0";
+    document.body.appendChild(area);
+    area.select();
+    try{copied=document.execCommand("copy")}catch{}
+    area.remove();
+  }
+
+  const status=document.getElementById("aiCopyStatus");
+  if(status){
+    status.textContent=copied
+      ?"題目已複製，開啟後直接貼上即可查詢。"
+      :"已開啟查詢頁，請手動複製題目。";
+  }
+
+  const url=service==="chatgpt"
+    ?"https://chatgpt.com/"
+    :"https://gemini.google.com/app";
+
+  window.open(url,"_blank","noopener,noreferrer");
+}
+
+let optionAnalysisEditCache={};
+const SUMMARY_ANALYSIS_KEY="summaryText";
+const MEMORY_ANALYSIS_KEY="memoryText";
+
+function cssId(v){
+  return String(v??"").replace(/[^a-zA-Z0-9_-]/g,"_")
+}
+
+function analysisKeysForQuestion(q){
+  return q?.type==="choice"
+    ?(q.options||[]).map(o=>String(o.key))
+    :["O","X"]
+}
+
+function originalOptionAnalysisText(q,key){
+  const a=q?.option_analysis||{};
+  const ok=String(key)===String(q?.answer);
+  return a[key]
+    ||(ok
+      ?(q?.explanation||"此選項符合本題依據。")
+      :(q?.correction||"此選項不符合本題所列規範，請對照正確答案與法源判斷。"))
+}
+
+function originalSummaryText(q){
+  return q?.explanation||"本題未提供補充解析。"
+}
+
+function originalMemoryText(q){
+  return q?.memory||""
+}
+
+function customAnalysisItem(key){
+  return optionAnalysisEditCache?.[String(key)]||null
+}
+
+function isAnalysisCustomized(key){
+  const item=customAnalysisItem(key);
+  return Boolean(item&&!item.deleted&&String(item.text||"").trim())
+}
+
+function effectiveOptionAnalysisText(q,key){
+  const item=customAnalysisItem(key);
+  return isAnalysisCustomized(key)
+    ?String(item.text)
+    :originalOptionAnalysisText(q,key)
+}
+
+function effectiveSummaryText(q){
+  const item=customAnalysisItem(SUMMARY_ANALYSIS_KEY);
+  return isAnalysisCustomized(SUMMARY_ANALYSIS_KEY)
+    ?String(item.text)
+    :originalSummaryText(q)
+}
+
+function effectiveMemoryText(q){
+  const item=customAnalysisItem(MEMORY_ANALYSIS_KEY);
+  return isAnalysisCustomized(MEMORY_ANALYSIS_KEY)
+    ?String(item.text)
+    :originalMemoryText(q)
+}
+
+function refreshOptionAnalysisItem(q,key){
+  const safeKey=cssId(key);
+  const customized=isAnalysisCustomized(key);
+  const textEl=document.getElementById(`analysisText-${safeKey}`);
+  const badge=document.getElementById(`analysisCustomBadge-${safeKey}`);
+
+  if(textEl){
+    textEl.textContent=effectiveOptionAnalysisText(q,key);
+    textEl.classList.toggle("customized",customized)
+  }
+  if(badge)badge.classList.toggle("hidden",!customized)
+}
+
+function refreshSummaryAnalysis(q){
+  const customized=isAnalysisCustomized(SUMMARY_ANALYSIS_KEY);
+  const textEl=document.getElementById("summaryText");
+  const badge=document.getElementById("summaryCustomBadge");
+
+  if(textEl){
+    textEl.textContent=effectiveSummaryText(q);
+    textEl.classList.toggle("customized",customized)
+  }
+  if(badge)badge.classList.toggle("hidden",!customized)
+}
+
+function refreshMemoryAnalysis(q){
+  const memoryBox=document.getElementById("memoryNoteBox");
+  const memoryText=document.getElementById("memoryText");
+  const value=effectiveMemoryText(q);
+
+  if(memoryBox){
+    memoryBox.classList.toggle("hidden",!String(value||"").trim())
+  }
+  if(memoryText){
+    memoryText.textContent=value
+  }
+}
+
+function updateAnalysisSyncBadge(q){
+  const keys=[
+    ...analysisKeysForQuestion(q),
+    SUMMARY_ANALYSIS_KEY,
+    MEMORY_ANALYSIS_KEY
+  ];
+  const count=keys.filter(key=>isAnalysisCustomized(key)).length;
+  const badge=document.getElementById("analysisSyncBadge");
+  if(badge){
+    badge.textContent=count
+      ?`已自訂 ${count} 處`
+      :"使用題庫原始解析"
+  }
+}
+
+async function loadOptionAnalysisEditsForQuestion(q){
+  optionAnalysisEditCache={};
+  const badge=document.getElementById("analysisSyncBadge");
+  if(badge)badge.textContent="讀取中…";
+
+  try{
+    const edits=await window.firebaseQuizSync?.getOptionAnalysisEdits?.(q.id);
+    optionAnalysisEditCache=edits&&typeof edits==="object"?edits:{};
+
+    analysisKeysForQuestion(q).forEach(key=>{
+      refreshOptionAnalysisItem(q,key)
+    });
+    refreshSummaryAnalysis(q);
+    refreshMemoryAnalysis(q);
+    updateAnalysisSyncBadge(q)
+  }catch(error){
+    if(badge)badge.textContent="讀取失敗";
+    console.warn(error)
+  }
+}
+
+function setAnalysisBulkStatus(message,kind=""){
+  const el=document.getElementById("analysisBulkStatus");
+  if(!el)return;
+  el.textContent=message||"";
+  el.className=`analysis-bulk-status ${kind}`.trim()
+}
+
+function openAnalysisBulkEditor(){
+  const q=currentQuestion();
+  const editor=document.getElementById("analysisBulkEditor");
+  if(!q||!editor)return;
+
+  analysisKeysForQuestion(q).forEach(key=>{
+    const area=document.getElementById(`analysisBulkText-${cssId(key)}`);
+    if(area)area.value=effectiveOptionAnalysisText(q,key)
+  });
+
+  const summaryArea=document.getElementById("analysisBulkSummaryText");
+  if(summaryArea)summaryArea.value=effectiveSummaryText(q);
+
+  const memoryArea=document.getElementById("analysisBulkMemoryText");
+  if(memoryArea)memoryArea.value=effectiveMemoryText(q);
+
+  editor.classList.remove("hidden");
+
+  const button=document.getElementById("analysisGlobalEditBtn");
+  if(button){
+    button.textContent="🔓 解析內容編輯中";
+    button.disabled=true
+  }
+
+  setAnalysisBulkStatus(
+    "已解除逐選項分析、本題總結與記憶重點鎖定；完成後請按「儲存全部修改」。",
+    "working"
+  );
+
+  setTimeout(()=>{
+    editor.scrollIntoView({behavior:"smooth",block:"nearest"})
+  },60)
+}
+
+function cancelAnalysisBulkEditor(){
+  const editor=document.getElementById("analysisBulkEditor");
+  if(editor)editor.classList.add("hidden");
+
+  const button=document.getElementById("analysisGlobalEditBtn");
+  if(button){
+    button.textContent="🔒 修改逐項分析、本題總結與記憶重點";
+    button.disabled=false
+  }
+
+  setAnalysisBulkStatus("已取消，本次變更未儲存。")
+}
+
+function fillAnalysisBulkOriginals(){
+  const q=currentQuestion();
+  if(!q)return;
+
+  analysisKeysForQuestion(q).forEach(key=>{
+    const area=document.getElementById(`analysisBulkText-${cssId(key)}`);
+    if(area)area.value=originalOptionAnalysisText(q,key)
+  });
+
+  const summaryArea=document.getElementById("analysisBulkSummaryText");
+  if(summaryArea)summaryArea.value=originalSummaryText(q);
+
+  const memoryArea=document.getElementById("analysisBulkMemoryText");
+  if(memoryArea)memoryArea.value=originalMemoryText(q);
+
+  setAnalysisBulkStatus(
+    "已將編輯欄填回題庫原始內容；按「儲存全部修改」後才會正式還原。",
+    "working"
+  )
+}
+
+async function saveAnalysisBulkEdits(){
+  const q=currentQuestion();
+  const saveBtn=document.getElementById("analysisBulkSaveBtn");
+  if(!q||!saveBtn)return;
+
+  const targets=[
+    ...analysisKeysForQuestion(q).map(key=>({
+      key,
+      text:document.getElementById(`analysisBulkText-${cssId(key)}`)?.value.trim()||"",
+      original:originalOptionAnalysisText(q,key).trim()
+    })),
+    {
+      key:SUMMARY_ANALYSIS_KEY,
+      text:document.getElementById("analysisBulkSummaryText")?.value.trim()||"",
+      original:originalSummaryText(q).trim()
+    },
+    {
+      key:MEMORY_ANALYSIS_KEY,
+      text:document.getElementById("analysisBulkMemoryText")?.value.trim()||"",
+      original:originalMemoryText(q).trim()
+    }
+  ];
+
+  const empty=targets.find(item=>
+    !item.text &&
+    item.key!==MEMORY_ANALYSIS_KEY
+  );
+  if(empty){
+    setAnalysisBulkStatus(
+      empty.key===SUMMARY_ANALYSIS_KEY
+        ?"本題總結不可空白。"
+        :`選項 ${empty.key} 的分析內容不可空白。`,
+      "error"
+    );
+    return
+  }
+
+  const memoryTarget=targets.find(item=>item.key===MEMORY_ANALYSIS_KEY);
+  if(
+    memoryTarget &&
+    !memoryTarget.text &&
+    memoryTarget.original
+  ){
+    setAnalysisBulkStatus(
+      "記憶重點不可空白；如要恢復原內容，請使用「填回全部原始內容」。",
+      "error"
+    );
+    return
+  }
+
+  saveBtn.disabled=true;
+  const oldLabel=saveBtn.textContent;
+  saveBtn.textContent="儲存中…";
+  setAnalysisBulkStatus("正在儲存逐項分析與本題總結…","working");
+
+  let changed=0;
+  let cloudSaved=false;
+
+  try{
+    for(const target of targets){
+      const existing=customAnalysisItem(target.key);
+      const hasCustom=isAnalysisCustomized(target.key);
+      const existingText=hasCustom
+        ?String(existing.text||"").trim()
+        :"";
+
+      if(target.text===target.original){
+        if(hasCustom){
+          const result=await window.firebaseQuizSync?.resetOptionAnalysisEdit?.(
+            q.id,
+            target.key
+          );
+          optionAnalysisEditCache[target.key]={
+            ...(existing||{}),
+            text:"",
+            deleted:true,
+            updatedAtMs:Date.now()
+          };
+          changed++;
+          if(result?.location==="cloud")cloudSaved=true
+        }
+        continue
+      }
+
+      if(hasCustom&&existingText===target.text){
+        continue
+      }
+
+      const result=await window.firebaseQuizSync?.saveOptionAnalysisEdit?.(
+        q.id,
+        target.key,
+        target.text
+      );
+
+      optionAnalysisEditCache[target.key]=result?.item||{
+        text:target.text,
+        deleted:false,
+        createdAtMs:Number(existing?.createdAtMs||Date.now()),
+        updatedAtMs:Date.now()
+      };
+      changed++;
+      if(result?.location==="cloud")cloudSaved=true
+    }
+
+    analysisKeysForQuestion(q).forEach(key=>{
+      refreshOptionAnalysisItem(q,key)
+    });
+    refreshSummaryAnalysis(q);
+    refreshMemoryAnalysis(q);
+    updateAnalysisSyncBadge(q);
+
+    const editor=document.getElementById("analysisBulkEditor");
+    if(editor)editor.classList.add("hidden");
+
+    const globalBtn=document.getElementById("analysisGlobalEditBtn");
+    if(globalBtn){
+      globalBtn.textContent="🔒 修改逐項分析、本題總結與記憶重點";
+      globalBtn.disabled=false
+    }
+
+    setAnalysisBulkStatus(
+      changed
+        ?(cloudSaved
+          ?"修改完成，已同步至 Firestore。"
+          :"修改完成，已保存在目前裝置。")
+        :"內容沒有變更，無需儲存。",
+      "ok"
+    );
+
+    toast(changed?"解析內容已更新":"解析內容沒有變更")
+  }catch(error){
+    const rawMessage=String(error?.message||"請稍後再試。");
+    const friendlyMessage=rawMessage.includes("cannot begin and end with")
+      ?"Firestore 欄位名稱格式錯誤，請重新整理至最新版後再儲存。"
+      :rawMessage;
+    setAnalysisBulkStatus(
+      `儲存失敗：${friendlyMessage}`,
+      "error"
+    )
+  }finally{
+    saveBtn.disabled=false;
+    saveBtn.textContent=oldLabel
+  }
+}
+
+let geminiNoteUiState={
+  questionId:null,
+  note:null,
+  mode:"loading"
+};
+
+function setGeminiNoteStatus(message,kind=""){
+  const status=document.getElementById("geminiNoteStatus");
+  if(!status)return;
+  status.textContent=message||"";
+  status.className=`gemini-note-status ${kind}`.trim()
+}
+
+function formatGeminiNoteTime(value){
+  const ms=Number(value||0);
+  if(!ms)return "時間未記錄";
+  try{
+    return new Date(ms).toLocaleString("zh-TW",{
+      year:"numeric",month:"2-digit",day:"2-digit",
+      hour:"2-digit",minute:"2-digit"
+    })
+  }catch{
+    return "時間未記錄"
+  }
+}
+
+function setGeminiNoteBadge(text,kind=""){
+  const badge=document.getElementById("geminiNoteBadge");
+  if(!badge)return;
+  badge.textContent=text;
+  badge.className=`gemini-note-badge ${kind}`.trim()
+}
+
+function renderGeminiNotePanel(mode,note=null){
+  const empty=document.getElementById("geminiNoteEmptyState");
+  const saved=document.getElementById("geminiNoteSavedState");
+  const editor=document.getElementById("geminiNoteEditState");
+  const display=document.getElementById("geminiNoteDisplay");
+  const area=document.getElementById("geminiNoteText");
+  const time=document.getElementById("geminiNoteTime");
+  const editorTitle=document.getElementById("geminiNoteEditorTitle");
+  const saveButton=document.getElementById("saveGeminiNoteBtn");
+
+  if(!empty||!saved||!editor)return;
+
+  geminiNoteUiState.mode=mode;
+  geminiNoteUiState.note=note||null;
+
+  empty.classList.toggle("hidden",mode!=="empty");
+  saved.classList.toggle("hidden",mode!=="saved");
+  editor.classList.toggle("hidden",mode!=="edit");
+
+  if(mode==="empty"){
+    setGeminiNoteBadge("尚未建立");
+    setGeminiNoteStatus("這一題尚未建立 Gemini 個人筆記。");
+  }
+
+  if(mode==="saved"&&note){
+    setGeminiNoteBadge("已儲存","saved");
+    if(display){
+      display.value=note.text||"";
+      display.readOnly=true;
+      display.setAttribute("aria-readonly","true");
+    }
+    if(time){
+      const created=formatGeminiNoteTime(note.createdAtMs);
+      const updated=formatGeminiNoteTime(note.updatedAtMs);
+      time.innerHTML=`建立：${esc(created)}<br>最後修改：${esc(updated)}`
+    }
+    setGeminiNoteStatus("筆記已載入，可直接查看、修改或刪除。","ok")
+  }
+
+  if(mode==="edit"){
+    const hasNote=Boolean(note?.text);
+    setGeminiNoteBadge(hasNote?"修改中":"新增中","editing");
+    if(area)area.value=note?.text||"";
+    if(editorTitle)editorTitle.textContent=hasNote?"修改 Gemini 個人筆記":"新增 Gemini 個人筆記";
+    if(saveButton)saveButton.textContent=hasNote?"儲存修改":"建立並儲存筆記";
+    setGeminiNoteStatus(
+      hasNote
+        ?"正在修改筆記；完成後請按「儲存修改」。"
+        :"請貼上 Gemini 回答，或直接輸入自己的補充內容。",
+      "working"
+    );
+    setTimeout(()=>area?.focus(),60)
+  }
+}
+
+async function loadGeminiNoteForQuestion(questionId){
+  const loginHint=document.getElementById("geminiNoteLoginHint");
+  geminiNoteUiState={questionId,note:null,mode:"loading"};
+
+  const signedIn=Boolean(window.firebaseQuizSync?.isSignedIn?.());
+  if(loginHint){
+    loginHint.textContent=signedIn
+      ?"已登入：新增、修改與刪除都會同步到其他裝置。"
+      :"訪客模式：內容先保存在目前裝置；登入後按「立即同步」即可上傳。"
+  }
+
+  setGeminiNoteBadge("讀取中");
+  setGeminiNoteStatus("正在讀取這一題的個人筆記…","working");
+
+  try{
+    const note=await window.firebaseQuizSync?.getGeminiNote?.(questionId);
+    if(note?.text){
+      renderGeminiNotePanel("saved",note)
+    }else{
+      renderGeminiNotePanel("empty",null)
+    }
+  }catch(error){
+    renderGeminiNotePanel("empty",null);
+    setGeminiNoteStatus(
+      `無法讀取筆記：${error?.message||"請稍後再試。"}`,
+      "error"
+    )
+  }
+}
+
+function startNewGeminiNote(){
+  renderGeminiNotePanel("edit",null)
+}
+
+function editCurrentGeminiNote(){
+  if(!geminiNoteUiState.note?.text){
+    startNewGeminiNote();
+    return
+  }
+
+  const confirmed=confirm(
+    "要解除鎖定並修改這一題的筆記嗎？\n修改完成後請按「儲存修改」。"
+  );
+  if(!confirmed)return;
+
+  renderGeminiNotePanel("edit",geminiNoteUiState.note)
+}
+
+function cancelGeminiNoteEdit(){
+  if(geminiNoteUiState.note?.text){
+    renderGeminiNotePanel("saved",geminiNoteUiState.note)
+  }else{
+    renderGeminiNotePanel("empty",null)
+  }
+}
+
+function toggleGeminiNoteHeight(){
+  const display=document.getElementById("geminiNoteDisplay");
+  const button=document.getElementById("toggleGeminiNoteBtn");
+  if(!display||!button)return;
+  const collapsed=display.classList.toggle("is-collapsed");
+  button.textContent=collapsed?"展開全文":"收合內容"
+}
+
+async function pasteGeminiNoteFromClipboard(){
+  if(geminiNoteUiState.mode!=="edit"){
+    renderGeminiNotePanel("edit",geminiNoteUiState.note)
+  }
+
+  const area=document.getElementById("geminiNoteText");
+  if(!area)return;
+
+  try{
+    if(!navigator.clipboard?.readText){
+      throw new Error("此瀏覽器不允許網站直接讀取剪貼簿")
+    }
+    const text=await navigator.clipboard.readText();
+    if(!text.trim())throw new Error("剪貼簿目前沒有文字內容");
+    area.value=text;
+    area.focus();
+    setGeminiNoteStatus(
+      "已從剪貼簿貼上。確認內容後請按儲存。",
+      "ok"
+    )
+  }catch(error){
+    area.focus();
+    setGeminiNoteStatus(
+      "瀏覽器未允許自動讀取剪貼簿，請在編輯框長按並選擇「貼上」。",
+      "error"
+    )
+  }
+}
+
+async function saveCurrentGeminiNote(){
+  const q=currentQuestion();
+  const area=document.getElementById("geminiNoteText");
+  const button=document.getElementById("saveGeminiNoteBtn");
+  if(!q||!area||!button)return;
+
+  const text=area.value.trim();
+  if(!text){
+    setGeminiNoteStatus("請先輸入或貼上筆記內容。","error");
+    area.focus();
+    return
+  }
+
+  const wasEditing=Boolean(geminiNoteUiState.note?.text);
+  button.disabled=true;
+  button.textContent=wasEditing?"修改儲存中…":"建立儲存中…";
+  setGeminiNoteStatus(
+    wasEditing?"正在儲存修改內容…":"正在建立個人筆記…",
+    "working"
+  );
+
+  try{
+    const result=await window.firebaseQuizSync?.saveGeminiNote?.(q.id,text);
+    const savedNote={
+      questionId:q.id,
+      text,
+      createdAtMs:Number(
+        result?.createdAtMs||
+        geminiNoteUiState.note?.createdAtMs||
+        Date.now()
+      ),
+      updatedAtMs:Number(result?.updatedAtMs||Date.now()),
+      deleted:false
+    };
+    geminiNoteUiState.note=savedNote;
+    renderGeminiNotePanel("saved",savedNote);
+
+    const cloud=result?.location==="cloud";
+    setGeminiNoteStatus(
+      cloud
+        ?(wasEditing
+          ?"筆記修改完成，已同步到 Firestore。"
+          :"筆記建立完成，已同步到 Firestore。")
+        :(wasEditing
+          ?"筆記修改完成，已保存在目前裝置。"
+          :"筆記建立完成，已保存在目前裝置。"),
+      "ok"
+    );
+    toast(wasEditing?"AI 筆記已修改":"AI 筆記已建立")
+  }catch(error){
+    setGeminiNoteStatus(
+      `儲存失敗：${error?.message||"請稍後再試。"}`,
+      "error"
+    )
+  }finally{
+    button.disabled=false;
+    button.textContent=wasEditing?"儲存修改":"建立並儲存筆記"
+  }
+}
+
+async function deleteCurrentGeminiNote(){
+  const q=currentQuestion();
+  const button=document.getElementById("deleteGeminiNoteBtn");
+  if(!q||!button)return;
+
+  if(!geminiNoteUiState.note?.text){
+    renderGeminiNotePanel("empty",null);
+    return
+  }
+
+  if(!confirm("確定刪除這一題的 Gemini 個人筆記？刪除狀態會同步到其他裝置。")){
+    return
+  }
+
+  button.disabled=true;
+  const oldLabel=button.textContent;
+  button.textContent="刪除中…";
+  setGeminiNoteStatus("正在刪除 Gemini 個人筆記…","working");
+
+  try{
+    const result=await window.firebaseQuizSync?.deleteGeminiNote?.(q.id);
+    geminiNoteUiState.note=null;
+    renderGeminiNotePanel("empty",null);
+    setGeminiNoteStatus(
+      result?.location==="cloud"
+        ?"筆記已刪除，並同步到 Firestore。"
+        :"筆記已從目前裝置刪除；登入後同步即可更新雲端。",
+      "ok"
+    );
+    toast("AI 筆記已刪除")
+  }catch(error){
+    setGeminiNoteStatus(
+      `刪除失敗：${error?.message||"請稍後再試。"}`,
+      "error"
+    )
+  }finally{
+    button.disabled=false;
+    button.textContent=oldLabel
+  }
 }
 
 function correctLabel(q,key){
@@ -646,6 +2735,7 @@ function renderQuestion(){
     document.querySelectorAll(".option-btn").forEach(x=>x.classList.toggle("selected",x===b))
   }));
   $("answerArea").innerHTML="";
+  $("practiceView").classList.remove("has-answer");
   $("submitBtn").classList.remove("hidden");
   $("skipBtn").classList.remove("hidden");
   $("nextBtn").classList.add("hidden");
@@ -663,7 +2753,7 @@ function submitAnswer(){
     wrong:(p.wrong||0)+(isCorrect?0:1),
     skipped:p.skipped||0,
     lastAnswer:selectedAnswer,lastCorrect:isCorrect,lastAction:"answered",
-    favorite:!!p.favorite
+    favorite:!!p.favorite,updatedAtMs:Date.now()
   };
   saveProgress();answered=true;
   document.querySelectorAll(".option-btn").forEach(b=>{
@@ -673,17 +2763,273 @@ function submitAnswer(){
     else if(String(key)===String(selectedAnswer)&&!isCorrect)b.classList.add("wrong")
   });
   const optionAnalysis=q.option_analysis||{};
-  const analysisHtml=Object.keys(optionAnalysis).length?`<details><summary>查看各選項分析</summary>
-    <div class="detail-body">${(q.options||[]).filter(o=>optionAnalysis[o.key]).map(o=>
-      `<p><strong>(${esc(o.key)}) ${esc(o.text)}</strong><br>${esc(optionAnalysis[o.key])}</p>`).join("")}</div></details>`:"";
+  const analysisOptions=q.type==="choice"
+    ?(q.options||[])
+    :[{key:"O",text:"正確（O）"},{key:"X",text:"錯誤（X）"}];
+
+  const analysisHtml=analysisOptions.map(o=>{
+    const isAnswer=String(o.key)===String(q.answer);
+    const detail=optionAnalysis[o.key]
+      ||(isAnswer
+        ?(q.explanation||"此選項符合本題依據。")
+        :(q.correction||"此選項不符合本題所列規範，請對照正確答案與法源判斷。"));
+    const tag=isAnswer?"正確選項":"易誤選";
+    const safeKey=cssId(o.key);
+
+    return `<div class="analysis-item">
+      <div class="analysis-icon ${isAnswer?"ok":"bad"}">${isAnswer?"✓":"×"}</div>
+      <div class="analysis-content">
+        <div class="analysis-title-row">
+          <div class="analysis-title">${esc(o.key)}．${esc(o.text)}</div>
+          <span class="analysis-tag ${isAnswer?"correct":""}">${tag}</span>
+          <span class="analysis-custom-badge hidden"
+                id="analysisCustomBadge-${safeKey}">✎ 已自訂</span>
+        </div>
+        <div class="analysis-text"
+             id="analysisText-${safeKey}">${esc(detail)}</div>
+      </div>
+    </div>`
+  }).join("");
+
+  const analysisBulkFieldsHtml=analysisOptions.map(o=>{
+    const safeKey=cssId(o.key);
+    return `<div class="analysis-bulk-section">
+      <div class="analysis-bulk-label">
+        <span class="option-pill">${esc(o.key)}</span>
+        <span>${esc(o.text)}</span>
+      </div>
+      <textarea class="analysis-bulk-textarea"
+                id="analysisBulkText-${safeKey}"
+                maxlength="30000"
+                placeholder="請輸入此選項的分析內容"></textarea>
+    </div>`
+  }).join("");
+
+  const answerKey=q.type==="true_false"
+    ?correctLabel(q,q.answer)
+    :String(q.answer);
+
+  $("practiceView").classList.add("has-answer");
   $("answerArea").innerHTML=`
-    <div class="answer-banner ${isCorrect?"ok":"bad"}">${isCorrect?"🎉 答對了！":`答錯了。<br>你的答案：${esc(correctLabel(q,selectedAnswer))}<br>正確答案：${esc(correctLabel(q,q.answer))}`}</div>
-    <div class="explain"><h3>💡 題目詳解</h3><p>${esc(q.explanation||"本題未提供補充解析。")}</p>
-      ${q.correction?`<div class="note correct"><strong>正確說法：</strong>${esc(q.correction)}</div>`:""}
-      ${q.source?`<div class="note source"><strong>主要依據／考點：</strong>${esc(q.source)}</div>`:""}
-      ${q.memory?`<div class="note memory"><strong>記憶重點：</strong>${esc(q.memory)}</div>`:""}
-      ${analysisHtml}
-    </div>`;
+    <section class="answer-panel">
+      <div class="answer-mascot">🐶</div>
+      <div class="answer-head">
+        <div class="answer-result ${isCorrect?"":"wrong"}">
+          <span class="answer-result-icon">${isCorrect?"✓":"!"}</span>
+          <span>正確解答 ${esc(answerKey)}</span>
+        </div>
+        <span class="answer-badge">✦ 政府採購精選詳解</span>
+      </div>
+      <div class="analysis-wrap">
+        <div class="analysis-heading">逐選項分析</div>
+        <div class="analysis-tools">
+          <div class="analysis-tools-note">
+            逐選項分析、本題總結與記憶重點預設鎖定；使用同一個修改按鈕即可一次進入編輯模式。
+          </div>
+          <span class="analysis-sync-badge" id="analysisSyncBadge">讀取中…</span>
+          <button class="analysis-global-edit-btn"
+                  id="analysisGlobalEditBtn"
+                  type="button"
+                  onclick="openAnalysisBulkEditor()">
+            🔒 修改逐項分析與本題總結
+          </button>
+        </div>
+
+        <div class="analysis-list">${analysisHtml}</div>
+
+        <div class="analysis-bulk-editor hidden" id="analysisBulkEditor">
+          <div class="analysis-bulk-head">
+            <div>
+              <div class="analysis-bulk-title">統一修改解析內容</div>
+              <div class="analysis-bulk-note">
+                可一次修改所有選項分析、本題總結及記憶重點；只有按下「儲存全部修改」才會更新。
+              </div>
+            </div>
+            <span class="analysis-bulk-lock">🔓 編輯模式</span>
+          </div>
+
+          ${analysisBulkFieldsHtml}
+
+          <div class="analysis-bulk-section analysis-bulk-summary">
+            <div class="analysis-bulk-label">
+              <span class="option-pill">總結</span>
+              <span>本題總結</span>
+            </div>
+            <textarea class="analysis-bulk-textarea"
+                      id="analysisBulkSummaryText"
+                      maxlength="30000"
+                      placeholder="請輸入本題總結"></textarea>
+          </div>
+
+          <div class="analysis-bulk-section">
+            <div class="analysis-bulk-label">
+              <span class="option-pill">記憶</span>
+              <span>記憶重點</span>
+            </div>
+            <textarea class="analysis-bulk-textarea"
+                      id="analysisBulkMemoryText"
+                      maxlength="30000"
+                      placeholder="請輸入記憶重點"></textarea>
+          </div>
+
+          <div class="analysis-bulk-actions">
+            <button class="analysis-bulk-save"
+                    id="analysisBulkSaveBtn"
+                    type="button"
+                    onclick="saveAnalysisBulkEdits()">
+              儲存全部修改
+            </button>
+            <button class="analysis-bulk-cancel"
+                    type="button"
+                    onclick="cancelAnalysisBulkEditor()">
+              取消
+            </button>
+            <button class="analysis-bulk-original"
+                    type="button"
+                    onclick="fillAnalysisBulkOriginals()">
+              填回全部原始內容
+            </button>
+          </div>
+          <div class="analysis-bulk-status"
+               id="analysisBulkStatus"
+               aria-live="polite"></div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-title-row">
+            <div class="summary-title">
+              本題總結
+              <span class="summary-custom-badge hidden"
+                    id="summaryCustomBadge">✎ 已自訂</span>
+            </div>
+            <span class="summary-lock-badge">🔒 鎖定檢視</span>
+          </div>
+          <p class="summary-text"
+             id="summaryText">${esc(q.explanation||"本題未提供補充解析。")}</p>
+          ${q.correction?`<div class="note correct"><strong>正確說法：</strong>${esc(q.correction)}</div>`:""}
+          ${q.source?`<div class="note source"><strong>主要依據／考點：</strong>${esc(q.source)}</div>`:""}
+          ${(q.memory||isAnalysisCustomized(MEMORY_ANALYSIS_KEY))
+  ?`<div class="note memory" id="memoryNoteBox"><strong>記憶重點：</strong><span id="memoryText">${esc(effectiveMemoryText(q))}</span></div>`
+  :`<div class="note memory hidden" id="memoryNoteBox"><strong>記憶重點：</strong><span id="memoryText"></span></div>`}
+        </div>
+        <div class="gemini-note-box" id="geminiNoteBox">
+          <div class="gemini-note-head">
+            <div class="gemini-note-title-wrap">
+              <div class="gemini-note-logo">✨</div>
+              <div>
+                <div class="gemini-note-title">Gemini 個人 AI 筆記</div>
+                <div class="gemini-note-subtitle">免 API・可自行修改・登入後跨裝置同步</div>
+              </div>
+            </div>
+            <span class="gemini-note-badge" id="geminiNoteBadge">讀取中</span>
+          </div>
+
+          <div class="gemini-note-body">
+            <section class="gemini-note-state gemini-note-empty hidden"
+                     id="geminiNoteEmptyState">
+              <div class="gemini-note-empty-icon">📝</div>
+              <div class="gemini-note-empty-title">這一題還沒有個人筆記</div>
+              <div class="gemini-note-empty-text">
+                可先將題目複製到 Gemini 查詢，再把回答貼回來保存；
+                也可以直接建立自己的重點整理。
+              </div>
+              <div class="gemini-note-empty-actions">
+                <button class="gemini-note-btn primary" type="button"
+                        onclick="openAiQuery('gemini')">
+                  複製題目並開啟 Gemini
+                </button>
+                <button class="gemini-note-btn success" type="button"
+                        onclick="startNewGeminiNote()">
+                  ＋ 建立筆記
+                </button>
+              </div>
+            </section>
+
+            <section class="gemini-note-state gemini-note-saved hidden"
+                     id="geminiNoteSavedState">
+              <div class="gemini-note-saved-top">
+                <div class="gemini-note-saved-label">已儲存的個人筆記</div>
+                <div class="gemini-note-time" id="geminiNoteTime"></div>
+              </div>
+              <div class="gemini-note-lock-row">
+                <div class="gemini-note-lock-state">
+                  <span class="gemini-note-lock-icon">🔒</span>
+                  目前為鎖定檢視模式，無法直接修改內容
+                </div>
+              </div>
+              <textarea
+                class="gemini-note-readonly"
+                id="geminiNoteDisplay"
+                readonly
+                aria-readonly="true"
+                spellcheck="false"
+                tabindex="0"
+              ></textarea>
+              <div class="gemini-note-saved-actions">
+                <button class="gemini-note-btn secondary" id="toggleGeminiNoteBtn"
+                        type="button" onclick="toggleGeminiNoteHeight()">
+                  收合內容
+                </button>
+                <button class="gemini-note-btn warning" type="button"
+                        onclick="editCurrentGeminiNote()">
+                  🔓 解除鎖定並修改
+                </button>
+                <button class="gemini-note-btn danger" id="deleteGeminiNoteBtn"
+                        type="button" onclick="deleteCurrentGeminiNote()">
+                  刪除筆記
+                </button>
+              </div>
+            </section>
+
+            <section class="gemini-note-state gemini-note-editor hidden"
+                     id="geminiNoteEditState">
+              <div class="gemini-note-editor-head">
+                <div>
+                  <div class="gemini-note-editor-title" id="geminiNoteEditorTitle">
+                    新增 Gemini 個人筆記
+                  </div>
+                  <div class="gemini-note-editor-help">
+                    可貼上 Gemini 回答，再自行刪修、補充及整理重點。
+                  </div>
+                </div>
+              </div>
+              <div class="gemini-note-edit-unlocked">
+                🔓 已解除鎖定，目前可修改內容；尚未儲存前可按「取消」返回原筆記。
+              </div>
+              <div class="gemini-note-editor-tools">
+                <button class="gemini-note-btn primary" type="button"
+                        onclick="openAiQuery('gemini')">
+                  複製題目並開啟 Gemini
+                </button>
+                <button class="gemini-note-btn secondary" type="button"
+                        onclick="pasteGeminiNoteFromClipboard()">
+                  從剪貼簿貼上
+                </button>
+              </div>
+              <div class="gemini-note-copy-status" id="aiCopyStatus"></div>
+              <textarea class="gemini-note-textarea" id="geminiNoteText"
+                        maxlength="100000"
+                        placeholder="請在此貼上 Gemini 分析，或輸入自己的學習筆記。"></textarea>
+              <div class="gemini-note-editor-footer">
+                <button class="gemini-note-btn success" id="saveGeminiNoteBtn"
+                        type="button" onclick="saveCurrentGeminiNote()">
+                  建立並儲存筆記
+                </button>
+                <button class="gemini-note-btn secondary" type="button"
+                        onclick="cancelGeminiNoteEdit()">
+                  取消
+                </button>
+              </div>
+            </section>
+
+            <div class="gemini-note-login-hint" id="geminiNoteLoginHint"></div>
+            <div class="gemini-note-status" id="geminiNoteStatus"
+                 aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+  loadOptionAnalysisEditsForQuestion(q);
+  loadGeminiNoteForQuestion(q.id);
   $("submitBtn").classList.add("hidden");
   $("skipBtn").classList.add("hidden");
   $("nextBtn").classList.remove("hidden");
@@ -700,7 +3046,8 @@ function skipQuestion(){
     ...p,
     skipped:(p.skipped||0)+1,
     lastAction:"skipped",
-    favorite:!!p.favorite
+    favorite:!!p.favorite,
+    updatedAtMs:Date.now()
   };
   saveProgress();
 
@@ -733,7 +3080,7 @@ function prevQuestion(){
 function toggleFavorite(){
   const q=currentQuestion();if(!q)return;
   const p=questionProgress(q);
-  progress[q.id]={...p,favorite:!p.favorite};
+  progress[q.id]={...p,favorite:!p.favorite,updatedAtMs:Date.now()};
   saveProgress();$("favoriteBtn").textContent=progress[q.id].favorite?"★ 已收藏":"☆ 收藏";
   toast(progress[q.id].favorite?"已加入收藏":"已取消收藏")
 }
@@ -810,14 +3157,21 @@ function importProgress(e){
     try{
       const data=JSON.parse(reader.result);
       if(!data.progress||typeof data.progress!=="object")throw new Error();
-      progress=data.progress;saveProgress();renderHome();renderRecords();toast("學習紀錄已匯入")
+      const importedAt=Date.now();
+      progress=Object.fromEntries(
+        Object.entries(data.progress).map(([id,item])=>[
+          id,
+          {...item,updatedAtMs:Number(item?.updatedAtMs||importedAt)}
+        ])
+      );
+      saveProgress();renderHome();renderRecords();toast("學習紀錄已匯入")
     }catch{alert("檔案格式不正確")}
     e.target.value=""
   };
   reader.readAsText(file)
 }
 function resetProgress(){
-  if(!confirm("確定清除全部作答、略過、錯題與收藏紀錄？此動作無法復原。"))return;
+  if(!confirm("確定清除全部作答、略過、錯題與收藏紀錄？登入狀態下也會同步刪除雲端紀錄，此動作無法復原。"))return;
   progress={};saveProgress();renderHome();renderRecords();toast("已清除全部紀錄")
 }
 async function shareApp(){
@@ -828,10 +3182,29 @@ async function shareApp(){
   }catch{}
 }
 
+window.quizSyncBridge={
+  getProgress:()=>JSON.parse(JSON.stringify(progress||{})),
+  replaceProgress:(next)=>{
+    progress=next&&typeof next==="object"?next:{};
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));
+    renderHome();
+    renderRecords();
+    if(document.getElementById("searchView")?.classList.contains("active"))runSearch()
+  },
+  getSession:()=>session?JSON.parse(JSON.stringify(session)):null,
+  replaceSession:(next)=>{
+    session=next&&typeof next==="object"?next:null;
+    localStorage.setItem(SESSION_KEY,JSON.stringify(session))
+  },
+  toast
+};
+
 init();
 if("serviceWorker" in navigator&&location.protocol.startsWith("http")){
   navigator.serviceWorker.register("sw.js").catch(()=>{})
 }
 </script>
+<script src="./firebase-config.js"></script>
+<script type="module" src="./firebase-sync.js?v=21"></script>
 </body>
 </html>
